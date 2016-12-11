@@ -41,4 +41,9 @@ public:
 
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
+	Cube c1;
+	PhysBody3D* c1body;
+	Cube ramp1;
+	PhysBody3D* ramp1body;
+	
 };
