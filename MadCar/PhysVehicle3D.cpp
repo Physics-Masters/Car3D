@@ -25,7 +25,7 @@ void PhysVehicle3D::Render()
 {
 	Cylinder wheel;
 
-	wheel.color = Red;
+	wheel.color = Grey;
 
 	for(int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
@@ -39,6 +39,7 @@ void PhysVehicle3D::Render()
 	}
 	
 	Cube chassis;
+	chassis.color = Gold;
 	for (int i = 0; i < info.num_chassis; ++i)
 	{
 		chassis.size = { info.chassis_size[i].x, info.chassis_size[i].y, info.chassis_size[i].z };

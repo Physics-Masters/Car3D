@@ -45,5 +45,7 @@ public:
 	PhysBody3D* c1body;
 	Cube ramp1;
 	PhysBody3D* ramp1body;
+	Cube ramp2;
+	PhysBody3D* ramp2body;
 	
 };

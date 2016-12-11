@@ -18,12 +18,27 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	c1.size = vec3(50, 10, 50);
+	c1.color = Brown;
 	c1body = App->physics->AddBody(c1, 0);
 
 	ramp1.size = vec3(6, 0.1, 2);
 	ramp1.SetRotation(-30, vec3(1,0,0));
 	ramp1.SetPos(0, 5.5, 25);
+	ramp1.color = Green;
 	ramp1body = App->physics->AddBody(ramp1, 0);
+
+	ramp2.size = vec3(6, 0.1, 20);
+	ramp2.SetRotation(-30, vec3(1, 0, 0));
+	ramp2.SetPos(20, 10,0);
+	ramp2.color = Brown;
+	ramp2body = App->physics->AddBody(ramp2, 0);
+
+
+
+
+
+
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
@@ -46,6 +61,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.Render();
 	c1.Render();
 	ramp1.Render();
+	ramp2.Render();
 	return UPDATE_CONTINUE;
 }
 
