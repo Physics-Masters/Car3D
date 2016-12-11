@@ -33,7 +33,15 @@ bool ModuleSceneIntro::Start()
 	ramp2.color = Brown;
 	ramp2body = App->physics->AddBody(ramp2, 0);
 
+	c2.size = vec3(10, 1, 50);
+	c2.SetPos(20, 15, 35);
+	c2.color = Brown;
+	c2body = App->physics->AddBody(c2, 0);
 
+	c3.size = vec3(10, 1, 50);
+	c3.SetPos(20, 15, 120);
+	c3.color = Brown;
+	c3body = App->physics->AddBody(c3, 0);
 
 
 
@@ -62,6 +70,8 @@ update_status ModuleSceneIntro::Update(float dt)
 	c1.Render();
 	ramp1.Render();
 	ramp2.Render();
+	c2.Render();
+	c3.Render();
 	return UPDATE_CONTINUE;
 }
 
