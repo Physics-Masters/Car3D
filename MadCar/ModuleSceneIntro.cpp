@@ -92,15 +92,17 @@ update_status ModuleSceneIntro::Update(float dt)
 	Plane p(0, 1, 0, 0);
 	//p.axis = true;
 	//p.Render();
+	
 	c1.Render();
 	wall1.Render();
-	light1.Render();
+	
 	ramp1.Render();
 	ramp2.Render();
 	ramp3.Render();
 	ramp4.Render();
 	stand1.Render();
 	c3.Render();
+	light1.Render();
 	return UPDATE_CONTINUE;
 }
 
