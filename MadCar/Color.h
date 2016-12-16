@@ -37,8 +37,9 @@ extern Color DarkBlue;
 extern Color Violet;
 extern Color Purple ;
 extern Color Magenta ;
-
+extern Color SpringGreen;
 extern Color Black ;
 extern Color Grey ;
 extern Color White ;
 extern Color Brown;
+extern Color LightColor;

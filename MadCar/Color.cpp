@@ -8,12 +8,13 @@ Color Lime = Color(0.50f, 1.00f, 0.00f);
 Color Green = Color(0.00f, 1.00f, 0.00f);
 Color LightMediumSeaGreeen = Color(0.00f, 1.00f, 0.50f);
 Color Cyan = Color(0.00f, 1.00f, 1.00f);
-Color Blue = Color(0.00f, 0.50f, 1.00f);
+Color Blue = Color(0.000, 0.502, 0.50);
+Color LightColor = Color(0.941, 0.902, 0.549, 0.0);
 Color DarkBlue = Color(0.00f, 0.00f, 1.00f);
 Color Violet = Color(0.50f, 0.00f, 1.00f);
 Color Purple = Color(1.00f, 0.00f, 1.00f);
 Color Magenta = Color(1.00f, 0.00f, 0.50f);
-
+Color SpringGreen = Color(0.000, 1.000, 0.498);
 Color Black = Color(0.00f, 0.00f, 0.00f);
 Color Grey = Color(0.50f, 0.50f, 0.50f);
 Color White = Color(1.00f, 1.00f, 1.00f);

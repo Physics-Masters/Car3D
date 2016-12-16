@@ -38,7 +38,9 @@ public:
 
 	PhysBody3D* pb_wheel2;
 	Cylinder p_wheel2;
-
+	Cube wall1;
+	Cube light1;
+	PhysBody3D* wall1body;
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 	Cube c1;
@@ -49,6 +51,8 @@ public:
 	PhysBody3D* ramp2body;
 	Cube ramp3;
 	PhysBody3D* ramp3body;
+	Cube ramp4;
+	PhysBody3D* ramp4body;
 	Cube stand1;
 	PhysBody3D* stand1body;
 	Cube c3;
