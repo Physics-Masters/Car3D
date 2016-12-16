@@ -18,6 +18,14 @@ void PhysBody3D::Push(float x, float y, float z)
 	body->applyCentralImpulse(btVector3(x, y, z));
 }
 
+void PhysBody3D::flip(float x, float y, float z)
+{
+	body->applyTorqueImpulse(btVector3(2500.0f*x, 2500.0f*y, 2500.0f*z));
+}
+
+
+
+
 // ---------------------------------------------------------
 void PhysBody3D::GetTransform(float* matrix) const
 {

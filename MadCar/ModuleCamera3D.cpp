@@ -10,9 +10,9 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 
 	zoom = 20;
 	
-	X = vec3(1.0f, 0.0f, 0.0f);
-	Y = vec3(0.0f, 1.0f, 0.0f);
-	Z = vec3(0.0f, 1.0f, 1.0f);
+	X = vec3(0.0f, 0.0f, 0.0f);
+	Y = vec3(0.0f, 0.0f, 0.0f);
+	Z = vec3(-1.0f, 1.0f, -2.0f);
 
 	Position = vec3(0.0f, 0.0f, 0.0f);
 	Reference = vec3(0.0f, 12.0f, 10.0f);
@@ -52,8 +52,8 @@ update_status ModuleCamera3D::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
 	if(App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
 	*/
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && zoom > 10) zoom -= 0.5;
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && zoom < 40) zoom += 0.5;
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT && zoom > 10) zoom -= 0.5;
+	if(App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT && zoom < 40) zoom += 0.5;
 
 	/*
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;

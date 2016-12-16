@@ -8,6 +8,7 @@
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
+	vehiclestate = GROUND;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -137,20 +138,31 @@ bool ModulePlayer::CleanUp()
 }
 
 // Update: draw background
-update_status ModulePlayer::Update(float dt)
-{
+ update_status ModulePlayer::Update(float dt)
+ {
+
+	 vehicle->GetTransform(&vehicle_transf);
+
+	 X = {vehicle_transf[0],vehicle_transf[1],vehicle_transf[2]};
+	 Y = { vehicle_transf[4],vehicle_transf[5],vehicle_transf[6] };
+	 Z = { vehicle_transf[8],vehicle_transf[9],vehicle_transf[10] };
+
+
 	turn = acceleration = brake = 0.0f;
 	int t;
 	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
 	{ 
-		t = 3;
+		t = 2;
 	}
 	else t = 1;
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		acceleration = t*MAX_ACCELERATION;
 	}
-
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		acceleration = -MAX_ACCELERATION;
+	}
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		if(turn < TURN_DEGREES)
@@ -163,13 +175,39 @@ update_status ModulePlayer::Update(float dt)
 			turn -= TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
 	{
 		brake = BRAKE_POWER;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	vehicle->Push(0, 10*vehicle->info.mass, 0);
 
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	{
+		vehicle->flip(X.x, X.y, X.z);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	{
+		vehicle->flip(-X.x, -X.y, -X.z);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{
+		vehicle->flip(Y.x, Y.y, Y.z);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	{
+		vehicle->flip(-Y.x, -Y.y, -Y.z);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		vehicle->flip(Z.x/2, Z.y/2, Z.z/2);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+	{
+		vehicle->flip(-Z.x / 2, -Z.y / 2, -Z.z / 2);
+	}
 	
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
