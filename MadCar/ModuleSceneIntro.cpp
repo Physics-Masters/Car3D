@@ -17,27 +17,35 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	c1.size = vec3(50, 10, 50);
+	c1.size = vec3(100, 10, 100);
 	c1.color = Brown;
 	c1body = App->physics->AddBody(c1, 0);
 
 	ramp1.size = vec3(6, 0.1, 2);
 	ramp1.SetRotation(-30, vec3(1,0,0));
-	ramp1.SetPos(0, 5.5, 25);
+	ramp1.SetPos(0, 5.5, 50);
 	ramp1.color = Green;
 	ramp1body = App->physics->AddBody(ramp1, 0);
 
-	ramp2.size = vec3(6, 0.1, 20);
+	ramp2.size = vec3(6, 0.1, 45);
 	ramp2.SetRotation(-30, vec3(1, 0, 0));
-	ramp2.SetPos(20, 10,0);
+	ramp2.SetPos(45, 10,0);
 	ramp2.color = Brown;
 	ramp2body = App->physics->AddBody(ramp2, 0);
+	//ramp to respawn
+	ramp3.size = vec3(100, 6.5, 10);
+	ramp3.SetRotation(30, vec3(1, 0, 0));
+	ramp3.SetPos(0, 0, 52);
+	ramp3.color = Brown;
+	ramp3body = App->physics->AddBody(ramp3, 0);
 
-	c2.size = vec3(10, 1, 50);
-	c2.SetPos(20, 15, 35);
-	c2.color = Brown;
-	c2body = App->physics->AddBody(c2, 0);
+	//stand 1
+	stand1.size = vec3(10, 1, 50);
+	stand1.SetPos(20, 15, 35);
+	stand1.color = Brown;
+	stand1body = App->physics->AddBody(stand1, 0);
 
+	//stand 2
 	c3.size = vec3(10, 1, 50);
 	c3.SetPos(20, 15, 120);
 	c3.color = Brown;
@@ -70,7 +78,8 @@ update_status ModuleSceneIntro::Update(float dt)
 	c1.Render();
 	ramp1.Render();
 	ramp2.Render();
-	c2.Render();
+	ramp3.Render();
+	stand1.Render();
 	c3.Render();
 	return UPDATE_CONTINUE;
 }
