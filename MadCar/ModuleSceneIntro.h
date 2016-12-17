@@ -40,11 +40,26 @@ public:
 	Cylinder p_wheel2;
 	Cube wall1;
 	Cube light1;
+	Cube light2;
 	PhysBody3D* wall1body;
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 	Cube c1;
 	PhysBody3D* c1body;
+	Cube b1;
+	PhysBody3D* b1body;
+	Cube b2;
+	PhysBody3D* b2body;
+	Cube box1;
+	PhysBody3D* box1body;
+	Cube box2;
+	PhysBody3D* box2body;
+	Cylinder cyl1;
+	PhysBody3D* cyl1body;
+	Cylinder cyl2;
+	PhysBody3D* cyl2body;
+	Cylinder cyl3;
+	PhysBody3D* cyl3body;
 	Cube ramp1;
 	PhysBody3D* ramp1body;
 	Cube ramp2;
@@ -57,5 +72,6 @@ public:
 	PhysBody3D* stand1body;
 	Cube c3;
 	PhysBody3D* c3body;
-	
+	Cube bridge1;
+	PhysBody3D* bridge1body;
 };

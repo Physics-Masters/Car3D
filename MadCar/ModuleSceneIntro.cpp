@@ -19,8 +19,17 @@ bool ModuleSceneIntro::Start()
 
 	c1.size = vec3(100, 10, 100);
 	c1.color = Brown;
-	
 	c1body = App->physics->AddBody(c1, 0);
+	//B1
+	b1.size = vec3(5, 5, 5);
+	b1.color = Brown;
+	b1.SetPos(43, 25, 100);
+	b1body = App->physics->AddBody(b1,2);
+	//b2
+	b2.size = vec3(5, 5, 5);
+	b2.color = Brown;
+	b2.SetPos(43, 30, 100);
+	b2body = App->physics->AddBody(b2, 2);
 	//wall 1
 	wall1.size = vec3(10, 200, 300);
 	wall1.color = Blue;
@@ -31,10 +40,14 @@ bool ModuleSceneIntro::Start()
 	light1.SetRotation(30, vec3(0, 0, 1));
 	light1.SetPos(50, 50, 10);
 	light1.color = LightColor;
-	
+	//Light 1
+	light2.size = vec3(250, 20, 20);
+	light2.SetRotation(30, vec3(0, 0, 1));
+	light2.SetPos(50, 50, 100);
+	light2.color = LightColor;
 	//middle ramp
-	ramp1.size = vec3(6, 0.1, 2);
-	ramp1.SetRotation(-30, vec3(1,0,0));
+	ramp1.size = vec3(6, 0.1, 6);
+	ramp1.SetRotation(-20, vec3(1,0,0));
 	ramp1.SetPos(0, 5.5, 50);
 	ramp1.color = Green;
 	ramp1body = App->physics->AddBody(ramp1, 0);
@@ -45,7 +58,7 @@ bool ModuleSceneIntro::Start()
 	ramp2.color = Brown;
 	ramp2body = App->physics->AddBody(ramp2, 0);
 	//ramp to respawn
-	ramp3.size = vec3(100, 6.5, 10);
+	ramp3.size = vec3(100, 6.2, 10);
 	ramp3.SetRotation(30, vec3(1, 0, 0));
 	ramp3.SetPos(0, 0, 52);
 	ramp3.color = Brown;
@@ -64,14 +77,40 @@ bool ModuleSceneIntro::Start()
 
 	//stand 2
 	c3.size = vec3(15, 1, 70);
-	c3.SetPos(43, 21, 170);
+	c3.SetPos(43, 21, 190);
 	c3.color = Brown;
 	c3body = App->physics->AddBody(c3, 0);
-
-
-
-
-
+	//Box1
+	box1.size = vec3(30, 15, 70);
+	box1.SetPos(0, 0, 120);
+	box1.color = SpringGreen;
+	box1body = App->physics->AddBody(box1, 0);
+	//Box2
+	box2.size = vec3(20, 15, 100);
+	box2.SetPos(-30, 0, 240);
+	box2.color = DarkBlue;
+	box2body = App->physics->AddBody(box2, 0);
+	cyl1.radius = 2;
+	cyl1.height = 20;
+	cyl1.SetPos(-30, 7.5, 235);
+	cyl1.color = SpringGreen;
+	cyl1body = App->physics->AddBody(cyl1, 0);
+	cyl2.radius = 2;
+	cyl2.height = 20;
+	cyl2.SetPos(-30, 8, 240);
+	cyl2.color = Red;
+	cyl2body = App->physics->AddBody(cyl2, 0);
+	cyl3.radius = 2;
+	cyl3.height = 20;
+	cyl3.SetPos(-30, 7.5, 250);
+	cyl3.color = SpringGreen;
+	cyl3body = App->physics->AddBody(cyl3, 0);
+	//bridge 1
+	bridge1.size = vec3(10, 0.2, 50);
+	bridge1.SetPos(-20, 7.6, 170);
+	bridge1.SetRotation(-20, vec3(0, 1, 0));
+	bridge1.color = Brown;
+	bridge1body = App->physics->AddBody(bridge1, 0);
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
@@ -102,7 +141,15 @@ update_status ModuleSceneIntro::Update(float dt)
 	ramp4.Render();
 	stand1.Render();
 	c3.Render();
+	box1.Render();
+	box2.Render();
+	cyl1.Render();
+	cyl2.Render();
+	cyl3.Render();
+	bridge1.Render();
+	//Render lights
 	light1.Render();
+	light2.Render();
 	return UPDATE_CONTINUE;
 }
 

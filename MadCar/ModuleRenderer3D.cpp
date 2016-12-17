@@ -78,7 +78,7 @@ bool ModuleRenderer3D::Init()
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
 		
 		lights[0].ref = GL_LIGHT0;
-		lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
+		lights[0].ambient.Set(0.55f, 0.55f, 0.55f, 1.0f);
 		lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
 		lights[0].SetPos(0.0f, 0.0f, 2.5f);
 		lights[0].Init();
@@ -86,11 +86,13 @@ bool ModuleRenderer3D::Init()
 		GLfloat MaterialAmbient[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MaterialAmbient);
 
-		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
+		GLfloat MaterialDiffuse[] = {0.0f, 0.0f, 1.0f, 1.0f};
+		
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
+		
 		glEnable(GL_DEPTH_TEST);
-		//glEnable(GL_CULL_FACE);
+		glEnable(GL_CULL_FACE);
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_BLEND);
