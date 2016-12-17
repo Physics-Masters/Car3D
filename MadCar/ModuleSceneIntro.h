@@ -50,6 +50,8 @@ public:
 	PhysBody3D* b1body;
 	Cube b2;
 	PhysBody3D* b2body;
+	Cube Table1;
+	PhysBody3D* Table1body;
 	Cube box1;
 	PhysBody3D* box1body;
 	Cube box2;
