@@ -8,12 +8,30 @@ struct PhysVehicle3D;
 #define MAX_ACCELERATION 2000.0f
 #define TURN_DEGREES 25.0f * DEGTORAD
 #define BRAKE_POWER 1000.0f
+#define PLAYING_TIME 180.00f
+#define FRONTFLIP_TIME 3.0f
+#define BACKFLIP_TIME 2.0f
+#define SIDEFLIP_TIME 1.0f
+#define TURNSIDE_TIME 2.0F
+
+
+enum Gamestate
+{
+	READY,
+	PLAYING,
+	END
+};
 
 enum state
 {
 	GROUND,
 	AIR,
-	FLIP
+	FRONTFLIP,
+	BACKFLIP,
+	LEFTFLIP,
+	RIGHTFLIP,
+	TURNRIGHT,
+	TURNLEFT
 };
 
 class ModulePlayer : public Module
@@ -28,6 +46,12 @@ public:
 
 	btVector3 GetVehiclePosition();
 
+	void GameProgress();
+	void Reset();
+	void Move();
+	void Flips();
+	void Score();
+
 public:
 
 	PhysVehicle3D* vehicle;
@@ -41,4 +65,12 @@ public:
 	vec3 X;
 	vec3 Y;
 	vec3 Z;
+
+
+	Gamestate play;
+	Timer time;
+	float gameplaytimer;
+	int score;
+	Timer fliptimer;
+	float endflip;
 };
