@@ -20,6 +20,10 @@ bool ModuleSceneIntro::Start()
 	c1.size = vec3(100, 10, 100);
 	c1.color = Brown;
 	c1body = App->physics->AddBody(c1, 0);
+	bed.size = vec3(101, 50, 300);
+	bed.SetPos(0, -25, 150);
+	bed.color =Indigo;
+	bedbody = App->physics->AddBody(bed, 0);
 	//B1
 	b1.size = vec3(5, 5, 5);
 	b1.color = Brown;
@@ -31,14 +35,14 @@ bool ModuleSceneIntro::Start()
 	b2.SetPos(43, 30, 100);
 	b2body = App->physics->AddBody(b2, 2);
 	//wall 1
-	wall1.size = vec3(10, 200, 300);
+	wall1.size = vec3(10, 200, 500);
 	wall1.color = Blue;
 	wall1.SetPos(55, 100, 150);
 	wall1body = App->physics->AddBody(wall1, 0);
 	//Light 1
 	light1.size = vec3(250, 20, 20);
 	light1.SetRotation(30, vec3(0, 0, 1));
-	light1.SetPos(50, 50, 10);
+	light1.SetPos(50, 50, 200);
 	light1.color = LightColor;
 	//Light 1
 	light2.size = vec3(250, 20, 20);
@@ -114,10 +118,103 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 	//Table 2
-	Table1.size = vec3(70, 15, 70);
+	Table1.size = vec3(100, 10, 80);
 	Table1.SetPos(0, 0, 320);
-	Table1.color = SpringGreen;
+	Table1.color = Brown;
 	Table1body = App->physics->AddBody(Table1, 0);
+	Table2.size = vec3(50, 30, 120);
+	Table2.SetPos(25, 20, 340);
+	Table2.color = Brown;
+	Table2body = App->physics->AddBody(Table2, 0);
+	//Wallride
+	w1.size = vec3(100, 6, 6);
+	w1.SetRotation(-10, vec3(1, 0, 0));
+	w1.SetPos(0, 2.7, 360);
+	w1.color = Brown;
+	w1body = App->physics->AddBody(w1, 0);
+	w2.size = vec3(100, 6, 6);
+	w2.SetRotation(-20, vec3(1, 0, 0));
+	w2.SetPos(0, 4, 365);
+	w2.color = Brown;
+	w2body = App->physics->AddBody(w2, 0);
+	w3.size = vec3(100, 6, 6);
+	w3.SetRotation(-30, vec3(1, 0, 0));
+	w3.SetPos(0, 6.5, 370);
+	w3.color = Brown;
+	w3body = App->physics->AddBody(w3, 0);
+	w4.size = vec3(100, 6, 6);
+	w4.SetRotation(-40, vec3(1, 0, 0));
+	w4.SetPos(0, 9.7, 375);
+	w4.color = Brown;
+	w4body = App->physics->AddBody(w4, 0);
+	w5.size = vec3(100, 6, 6);
+	w5.SetRotation(-50, vec3(1, 0, 0));
+	w5.SetPos(0, 14, 380);
+	w5.color = Brown;
+	w5body = App->physics->AddBody(w5, 0);
+	w6.size = vec3(100, 6, 6);
+	w6.SetRotation(-60, vec3(1, 0, 0));
+	w6.SetPos(0, 19, 384);
+	w6.color = Brown;
+	w5body = App->physics->AddBody(w6, 0);
+	w7.size = vec3(100, 6, 6);
+	w7.SetRotation(-70, vec3(1, 0, 0));
+	w7.SetPos(0, 25, 387);
+	w7.color = Brown;
+	w7body = App->physics->AddBody(w7, 0);
+	w8.size = vec3(100, 6, 6);
+	w8.SetRotation(-80, vec3(1, 0, 0));
+	w8.SetPos(0, 29, 388);
+	w8.color = Brown;
+	w8body = App->physics->AddBody(w8, 0);
+	//Wallride 2
+	/*
+	w1D.size = vec3(50, 6, 6);
+	w1D.SetRotation(-10, vec3(1, 0, 0));
+	w1D.SetPos(25, 32.7, 360);
+	w1D.color = Brown;
+	w1Dbody = App->physics->AddBody(w1D, 0);
+	w2D.size = vec3(50, 6, 6);
+	w2D.SetRotation(-20, vec3(1, 0, 0));
+	w2D.SetPos(25, 34, 365);
+	w2D.color = Brown;
+	w2Dbody = App->physics->AddBody(w2D, 0);
+	w3D.size = vec3(50, 6, 6);
+	w3D.SetRotation(-30, vec3(1, 0, 0));
+	w3D.SetPos(25, 36.5, 370);
+	w3D.color = Brown;
+	w3Dbody = App->physics->AddBody(w3D, 0);
+	w4D.size = vec3(50, 6, 6);
+	w4D.SetRotation(-40, vec3(1, 0, 0));
+	w4D.SetPos(25, 39.7, 375);
+	w4D.color = Brown;
+	w4body = App->physics->AddBody(w4D, 0);
+	w5D.size = vec3(50, 6, 6);
+	w5D.SetRotation(-50, vec3(1, 0, 0));
+	w5D.SetPos(25, 44, 380);
+	w5D.color = Brown;
+	w5Dbody = App->physics->AddBody(w5D, 0);
+	w6D.size = vec3(50, 6, 6);
+	w6D.SetRotation(-60, vec3(1, 0, 0));
+	w6D.SetPos(25, 49, 383);
+	w6D.color = Brown;
+	w5body = App->physics->AddBody(w6D, 0);
+	w7D.size = vec3(50, 6, 6);
+	w7D.SetRotation(-70, vec3(1, 0, 0));
+	w7D.SetPos(25, 55, 385);
+	w7D.color = Brown;
+	w7Dbody = App->physics->AddBody(w7D, 0);
+	w8D.size = vec3(50, 6, 6);
+	w8D.SetRotation(-80, vec3(1, 0, 0));
+	w8D.SetPos(25, 59, 386);
+	w8D.color = Brown;
+	w8Dbody = App->physics->AddBody(w8D, 0);*/
+	//FWALL
+	FWall.size = vec3(100, 6, 100);
+	FWall.SetRotation(-80, vec3(1, 0, 0));
+	FWall.SetPos(0, 49, 390);
+	FWall.color = Brown;
+	FWallbody = App->physics->AddBody(FWall, 0);
 	return ret;
 }
 
@@ -151,6 +248,27 @@ update_status ModuleSceneIntro::Update(float dt)
 	cyl2.Render();
 	cyl3.Render();
 	bridge1.Render();
+	Table1.Render();
+	Table2.Render();
+	bed.Render();
+	//wallride
+	w1.Render();
+	w2.Render();
+	w3.Render();
+	w4.Render();
+	w5.Render();
+	w6.Render();
+	w7.Render();
+	w8.Render();
+	w1D.Render();
+	w2D.Render();
+	w3D.Render();
+	w4D.Render();
+	w5D.Render();
+	w6D.Render();
+	w7D.Render();
+	w8D.Render();
+	FWall.Render();
 	//Render lights
 	light1.Render();
 	light2.Render();

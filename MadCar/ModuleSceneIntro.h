@@ -52,6 +52,8 @@ public:
 	PhysBody3D* b2body;
 	Cube Table1;
 	PhysBody3D* Table1body;
+	Cube Table2;
+	PhysBody3D* Table2body;
 	Cube box1;
 	PhysBody3D* box1body;
 	Cube box2;
@@ -76,4 +78,44 @@ public:
 	PhysBody3D* c3body;
 	Cube bridge1;
 	PhysBody3D* bridge1body;
+	//Wallride
+	Cube w1;
+	PhysBody3D* w1body;
+	Cube w2;
+	PhysBody3D* w2body;
+	Cube w3;
+	PhysBody3D* w3body;
+	Cube w4;
+	PhysBody3D* w4body;
+	Cube w5;
+	PhysBody3D* w5body;
+	Cube w6;
+	PhysBody3D* w6body;
+	Cube w7;
+	PhysBody3D* w7body;
+	Cube w8;
+	PhysBody3D* w8body;
+	//wallride2
+	Cube w1D;
+	PhysBody3D* w1Dbody;
+	Cube w2D;
+	PhysBody3D* w2Dbody;
+	Cube w3D;
+	PhysBody3D* w3Dbody;
+	Cube w4D;
+	PhysBody3D* w4Dbody;
+	Cube w5D;
+	PhysBody3D* w5Dbody;
+	Cube w6D;
+	PhysBody3D* w6Dbody;
+	Cube w7D;
+	PhysBody3D* w7Dbody;
+	Cube w8D;
+	PhysBody3D* w8Dbody;
+	//wall
+	Cube FWall;
+	PhysBody3D* FWallbody;
+	//BEd
+	Cube bed;
+	PhysBody3D* bedbody;
 };

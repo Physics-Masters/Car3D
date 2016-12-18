@@ -43,3 +43,4 @@ extern Color Grey ;
 extern Color White ;
 extern Color Brown;
 extern Color LightColor;
+extern Color Indigo;
