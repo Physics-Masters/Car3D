@@ -122,7 +122,10 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 12, 10);
+	vehicle->SetPos(0.0f, 12.0f, 10.0f);
+	
+	carbody = vehicle->GetBody();
+
 	
 	play = READY;
 
@@ -362,7 +365,7 @@ bool ModulePlayer::CleanUp()
 	 Score();
 
 	 vehicle->Render();
-
+	 
 	 char title[80];
 	 int min = (int) gameplaytimer / 60;
 	 float sec = gameplaytimer - min * 60;

@@ -53,6 +53,7 @@ public:
 	void Score();
 
 public:
+	PhysBody3D* carbody;
 
 	PhysVehicle3D* vehicle;
 	float turn;
