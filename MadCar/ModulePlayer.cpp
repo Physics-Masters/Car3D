@@ -4,6 +4,7 @@
 #include "Primitive.h"
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
+#include "ModulePhysics3D.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
@@ -188,8 +189,22 @@ bool ModulePlayer::CleanUp()
  {
 	 turn = acceleration = brake = 0.0f;
 	 
-	 if (play == PLAYING && vehiclestate == GROUND)
+	
+	 if (play == PLAYING)
 	 {
+			
+		 bool vehicleonground = CheckVehicleCollision(Y.x, Y.y, Y.z);
+		 if (vehicleonground == true && vehiclestate != GROUND)
+		 {
+			 vehiclestate = GROUND;
+			 LOG("GROUND");
+		 }
+		 else if (vehicleonground == false && vehiclestate == GROUND)
+		 {
+			 vehiclestate = AIR;
+			 LOG("AIR");
+		 }
+			 
 		 //turbo
 		 int t;
 		 if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
@@ -240,14 +255,17 @@ bool ModulePlayer::CleanUp()
 		 }
 
 		 //Shake car
-		 if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-			 vehicle->flip(X.x, X.y, X.z);
-		 if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-			 vehicle->flip(-X.x, -X.y, -X.z);
-		 if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-			 vehicle->flip(Z.x / 2, Z.y / 2, Z.z / 2);
-		 if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
-			 vehicle->flip(-Z.x / 2, -Z.y / 2, -Z.z / 2);
+		 if (vehiclestate == GROUND)
+		 {
+			 if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+				 vehicle->flip(X.x, X.y, X.z);
+			 if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+				 vehicle->flip(-X.x, -X.y, -X.z);
+			 if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+				 vehicle->flip(Z.x / 2, Z.y / 2, Z.z / 2);
+			 if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+				 vehicle->flip(-Z.x / 2, -Z.y / 2, -Z.z / 2);
+		 }
 	 }	
 
 	 vehicle->ApplyEngineForce(acceleration);
@@ -312,13 +330,13 @@ bool ModulePlayer::CleanUp()
 	 {
 		 score += 200;
 		 fliptimer.Stop();
-		 vehiclestate = GROUND;//AIR when sensor detect ground collision
+		 vehiclestate = AIR;//AIR when sensor detect ground collision
 	 }
 	 if (vehiclestate == BACKFLIP && endflip >= BACKFLIP_TIME)
 	 {
 		 score += 200;
 		 fliptimer.Stop();
-		 vehiclestate = GROUND;//AIR when sensor detect ground collision
+		 vehiclestate = AIR;//AIR when sensor detect ground collision
 	 }
 	 if (vehiclestate == LEFTFLIP || vehiclestate == RIGHTFLIP)
 	 {
@@ -326,7 +344,7 @@ bool ModulePlayer::CleanUp()
 		 {
 			 score += 200;
 			 fliptimer.Stop();
-			 vehiclestate = GROUND; //AIR when sensor detect ground collision
+			 vehiclestate = AIR; //AIR when sensor detect ground collision
 		 }
 	 }
 	 if (vehiclestate == TURNRIGHT || vehiclestate == TURNLEFT)
@@ -335,12 +353,28 @@ bool ModulePlayer::CleanUp()
 		 {
 			 score += 200;
 			 fliptimer.Stop();
-			 vehiclestate = GROUND;//AIR when sensor detect ground collision
+			 vehiclestate = AIR;//AIR when sensor detect ground collision
 		 }
 	 }
-	 //delete when sensor detect ground;
-	// vehiclestate = GROUND;
+ }
 
+ bool ModulePlayer::CheckVehicleCollision(float x, float y, float z)
+ {
+	 for (int i = 0; i < vehicle->info.num_wheels; ++i)
+	 {
+		 
+		 btVector3 btFrom = vehicle->vehicle->getWheelTransformWS(i).getOrigin();// vehicle->GetWheelinfo(i);
+		 btVector3 btTo = { btFrom.getX() - x, btFrom.getY() - y, btFrom.getZ() - z };
+		 btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
+		 App->physics->GetWorld()->rayTest(btFrom, btTo, res);
+
+		 if (res.hasHit() == true)
+		 {
+			 return true;
+		 }
+	 }
+	 
+	 return false;
  }
 
 // Update: draw background
@@ -357,10 +391,8 @@ bool ModulePlayer::CleanUp()
 	 //Car can move
 	 Move();
 
-	
-
-	 //if (vehiclestate == AIR)
-	 Flips();
+	 if (vehiclestate == AIR)
+		 Flips();
 
 	 Score();
 

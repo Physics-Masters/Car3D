@@ -51,10 +51,10 @@ public:
 	void Move();
 	void Flips();
 	void Score();
+	bool CheckVehicleCollision(float x, float y, float z);
 
 public:
 	PhysBody3D* carbody;
-
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;

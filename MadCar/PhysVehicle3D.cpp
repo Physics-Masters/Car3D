@@ -98,3 +98,15 @@ float PhysVehicle3D::GetKmh() const
 {
 	return vehicle->getCurrentSpeedKmHour();
 }
+
+
+
+bool PhysVehicle3D::WheelisInContact()
+{
+	for (int i = 0; i < vehicle->getNumWheels(); ++i)
+	{
+		if (vehicle->getWheelInfo(i).m_raycastInfo.m_isInContact == true)
+			return true;
+	}
+	return false;
+}

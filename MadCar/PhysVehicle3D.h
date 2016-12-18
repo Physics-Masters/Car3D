@@ -53,6 +53,9 @@ public:
 	void Brake(float force);
 	void Turn(float degrees);
 	float GetKmh() const;
+	
+	bool WheelisInContact();
+
 public:
 
 	VehicleInfo info;
