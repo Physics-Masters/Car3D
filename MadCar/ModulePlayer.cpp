@@ -169,7 +169,7 @@ bool ModulePlayer::CleanUp()
 	 {
 		if(vehicle->GetKmh() > 1 || vehicle->GetKmh() < -1)
 		vehicle->Brake(BRAKE_POWER);
-		if(App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && vehicle->GetKmh() < 2.0f && vehicle->GetKmh() > -2.0f)
+		if(App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)// && vehicle->GetKmh() < 2.0f && vehicle->GetKmh() > -2.0f)
 			Reset();
 	 }
  }
@@ -197,14 +197,12 @@ bool ModulePlayer::CleanUp()
 		 if (vehicleonground == true && vehiclestate != GROUND)
 		 {
 			 vehiclestate = GROUND;
-			 LOG("GROUND");
 		 }
 		 else if (vehicleonground == false && vehiclestate == GROUND)
 		 {
 			 vehiclestate = AIR;
-			 LOG("AIR");
 		 }
-			 
+		
 		 //turbo
 		 int t;
 		 if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
@@ -248,7 +246,7 @@ bool ModulePlayer::CleanUp()
 		 }
 	
 		 //jump
-		 if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && vehiclestate == GROUND)
+		 if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && vehiclestate == GROUND))
 		 {
 			 vehiclestate = AIR;
 			 vehicle->Push(0, 10 * vehicle->info.mass, 0);
@@ -277,42 +275,67 @@ bool ModulePlayer::CleanUp()
  void ModulePlayer::Flips()
  {
 	 if (vehiclestate != GROUND) {
-		 if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && vehiclestate != AIR)
+		 if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && vehiclestate != FRONTFLIP)
 		 {
-			 vehiclestate = FRONTFLIP;
-			 vehicle->flip(X.x, X.y, X.z);
+			 if (vehiclestate == BACKFLIP)
+			 {
+				 vehiclestate = AIR;
+				 vehicle->flip(X.x, X.y, X.z);
+			 }
+			 else
+			 {
+				 vehiclestate = FRONTFLIP;
+				 vehicle->flip(1.5* X.x, 1.5 * X.y, 1.5 * X.z);
+				 fliptimer.Start();
+			 }
+		 }
+		 if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN  && vehiclestate != BACKFLIP)
+		 {
+			 if (vehiclestate == FRONTFLIP)
+			 {
+				 vehiclestate = AIR;
+				 vehicle->flip(-1.5*X.x, -1.5*X.y, -1.5*X.z);
+			 }
+			 else
+			 {
+				 vehiclestate = BACKFLIP;
+				 vehicle->flip(-X.x, -X.y, -X.z);
+				 fliptimer.Start();
+			 }
+		 }
+
+		 if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN && vehiclestate != TURNRIGHT)
+		 {
+			 if (vehiclestate == TURNLEFT)
+				 vehiclestate = AIR;
+			 else vehiclestate = TURNRIGHT;
+
+			 vehicle->flip(1.5*Y.x, 1.5*Y.y, 1.5*Y.z);
 			 fliptimer.Start();
 		 }
-		 if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN  && vehiclestate == AIR)
+		 if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN && vehiclestate != TURNLEFT)
 		 {
-			 vehiclestate = BACKFLIP;
-			 vehicle->flip(-X.x, -X.y, -X.z);
+			 if (vehiclestate == TURNRIGHT)
+				 vehiclestate = AIR;
+			 else vehiclestate = TURNLEFT;
+			 vehicle->flip(-1.5*Y.x, -1.5*Y.y, -1.5*Y.z);
 			 fliptimer.Start();
 		 }
 
-		 if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN && vehiclestate == AIR)
+		 if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && vehiclestate != RIGHTFLIP)
 		 {
-			 vehiclestate = TURNRIGHT;
-			 vehicle->flip(Y.x, Y.y, Y.z);
+			 if (vehiclestate == LEFTFLIP)
+				 vehiclestate = AIR;
+			 else vehiclestate = RIGHTFLIP;
+			 vehicle->flip(Z.x / 3, Z.y / 3, Z.z / 3);
 			 fliptimer.Start();
 		 }
-		 if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN && vehiclestate == AIR)
+		 if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && vehiclestate != LEFTFLIP)
 		 {
-			 vehiclestate = TURNLEFT;
-			 vehicle->flip(-Y.x, -Y.y, -Y.z);
-			 fliptimer.Start();
-		 }
-
-		 if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && vehiclestate == AIR)
-		 {
-			 vehiclestate = RIGHTFLIP;
-			 vehicle->flip(Z.x / 2, Z.y / 2, Z.z / 2);
-			 fliptimer.Start();
-		 }
-		 if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && vehiclestate == AIR)
-		 {
-			 vehiclestate = LEFTFLIP;
-			 vehicle->flip(-Z.x / 2, -Z.y / 2, -Z.z / 2);
+			 if (vehiclestate == RIGHTFLIP)
+				 vehiclestate = AIR;
+			 else vehiclestate = LEFTFLIP;
+			 vehicle->flip(-Z.x / 3, -Z.y / 3, -Z.z / 3);
 			 fliptimer.Start();
 		 }
 		 if (vehiclestate != AIR)
@@ -330,13 +353,13 @@ bool ModulePlayer::CleanUp()
 	 {
 		 score += 200;
 		 fliptimer.Stop();
-		 vehiclestate = AIR;//AIR when sensor detect ground collision
+		 vehiclestate = AIR;
 	 }
 	 if (vehiclestate == BACKFLIP && endflip >= BACKFLIP_TIME)
 	 {
 		 score += 200;
 		 fliptimer.Stop();
-		 vehiclestate = AIR;//AIR when sensor detect ground collision
+		 vehiclestate = AIR;
 	 }
 	 if (vehiclestate == LEFTFLIP || vehiclestate == RIGHTFLIP)
 	 {
@@ -344,7 +367,7 @@ bool ModulePlayer::CleanUp()
 		 {
 			 score += 200;
 			 fliptimer.Stop();
-			 vehiclestate = AIR; //AIR when sensor detect ground collision
+			 vehiclestate = AIR;
 		 }
 	 }
 	 if (vehiclestate == TURNRIGHT || vehiclestate == TURNLEFT)
@@ -353,7 +376,7 @@ bool ModulePlayer::CleanUp()
 		 {
 			 score += 200;
 			 fliptimer.Stop();
-			 vehiclestate = AIR;//AIR when sensor detect ground collision
+			 vehiclestate = AIR;
 		 }
 	 }
  }
@@ -363,7 +386,7 @@ bool ModulePlayer::CleanUp()
 	 for (int i = 0; i < vehicle->info.num_wheels; ++i)
 	 {
 		 
-		 btVector3 btFrom = vehicle->vehicle->getWheelTransformWS(i).getOrigin();// vehicle->GetWheelinfo(i);
+		 btVector3 btFrom = vehicle->vehicle->getWheelTransformWS(i).getOrigin();
 		 btVector3 btTo = { btFrom.getX() - x, btFrom.getY() - y, btFrom.getZ() - z };
 		 btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
 		 App->physics->GetWorld()->rayTest(btFrom, btTo, res);
@@ -373,7 +396,7 @@ bool ModulePlayer::CleanUp()
 			 return true;
 		 }
 	 }
-	 
+	
 	 return false;
  }
 
@@ -390,9 +413,8 @@ bool ModulePlayer::CleanUp()
 
 	 //Car can move
 	 Move();
-
-	 if (vehiclestate == AIR)
-		 Flips();
+		
+	 Flips();
 
 	 Score();
 
