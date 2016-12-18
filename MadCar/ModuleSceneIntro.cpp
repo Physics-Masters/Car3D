@@ -40,12 +40,12 @@ bool ModuleSceneIntro::Start()
 	wall1.SetPos(55, 100, 150);
 	wall1body = App->physics->AddBody(wall1, 0);
 	//Light 1
-	light1.size = vec3(250, 20, 20);
+	light1.size = vec3(350, 20, 20);
 	light1.SetRotation(30, vec3(0, 0, 1));
 	light1.SetPos(50, 50, 200);
 	light1.color = LightColor;
 	//Light 1
-	light2.size = vec3(250, 20, 20);
+	light2.size = vec3(350, 20, 20);
 	light2.SetRotation(30, vec3(0, 0, 1));
 	light2.SetPos(50, 50, 100);
 	light2.color = LightColor;
@@ -212,7 +212,7 @@ bool ModuleSceneIntro::Start()
 	//FWALL
 	FWall.size = vec3(100, 6, 100);
 	FWall.SetRotation(-80, vec3(1, 0, 0));
-	FWall.SetPos(0, 49, 390);
+	FWall.SetPos(0, 49, 391);
 	FWall.color = Brown;
 	FWallbody = App->physics->AddBody(FWall, 0);
 	return ret;
