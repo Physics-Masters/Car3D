@@ -8,7 +8,6 @@ struct PhysVehicle3D;
 #define MAX_ACCELERATION 2000.0f
 #define TURN_DEGREES 25.0f * DEGTORAD
 #define BRAKE_POWER 1000.0f
-#define PLAYING_TIME 180.00f
 #define FRONTFLIP_TIME 3.0f
 #define BACKFLIP_TIME 2.0f
 #define SIDEFLIP_TIME 1.0f
@@ -62,6 +61,7 @@ public:
 
 	state vehiclestate;
 
+	float* originalpos;
 	mat4x4 vehicle_transf;
 	vec3 X;
 	vec3 Y;

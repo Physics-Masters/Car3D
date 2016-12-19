@@ -123,11 +123,15 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
+
+	
 	vehicle->SetPos(0.0f, 12.0f, 10.0f);
 	
 	carbody = vehicle->GetBody();
 
-	
+	originalpos = new float[16];
+	vehicle->GetTransform(originalpos);
+
 	play = READY;
 
 	return true;
@@ -137,6 +141,8 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
+
+	delete originalpos;
 
 	return true;
 }
@@ -177,7 +183,8 @@ bool ModulePlayer::CleanUp()
  void ModulePlayer::Reset()
  {
 	 // Reset game;
-	 vehicle->SetPos(0, 12, 10);
+	 //vehicle->SetPos(0, 12, 10);
+	 vehicle->SetTransform(originalpos);
 	 play = READY;	 
 	 gameplaytimer = PLAYING_TIME;
 	 score = 0;
@@ -251,20 +258,20 @@ bool ModulePlayer::CleanUp()
 			 vehiclestate = AIR;
 			 vehicle->Push(0, 10 * vehicle->info.mass, 0);
 		 }
-
-		 //Shake car
-		 if (vehiclestate == GROUND)
-		 {
-			 if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-				 vehicle->flip(X.x, X.y, X.z);
-			 if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-				 vehicle->flip(-X.x, -X.y, -X.z);
-			 if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-				 vehicle->flip(Z.x / 2, Z.y / 2, Z.z / 2);
-			 if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
-				 vehicle->flip(-Z.x / 2, -Z.y / 2, -Z.z / 2);
-		 }
 	 }	
+	 
+	 //Shake car
+	 if (vehiclestate == GROUND)
+	 {
+		 if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+			 vehicle->flip(X.x, X.y, X.z);
+		 if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+			 vehicle->flip(-X.x, -X.y, -X.z);
+		 if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+			 vehicle->flip(Z.x / 2, Z.y / 2, Z.z / 2);
+		 if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+			 vehicle->flip(-Z.x / 2, -Z.y / 2, -Z.z / 2);
+	 }
 
 	 vehicle->ApplyEngineForce(acceleration);
 	 vehicle->Turn(turn);
@@ -388,6 +395,19 @@ bool ModulePlayer::CleanUp()
 		 
 		 btVector3 btFrom = vehicle->vehicle->getWheelTransformWS(i).getOrigin();
 		 btVector3 btTo = { btFrom.getX() - x, btFrom.getY() - y, btFrom.getZ() - z };
+		 btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
+		 App->physics->GetWorld()->rayTest(btFrom, btTo, res);
+
+		 if (res.hasHit() == true)
+		 {
+			 return true;
+		 }
+	 }
+	 for (int i = 0; i < vehicle->info.num_wheels; ++i)
+	 {
+
+		 btVector3 btFrom = vehicle->vehicle->getWheelTransformWS(i).getOrigin();
+		 btVector3 btTo = { btFrom.getX() +2*x, btFrom.getY() +2*y, btFrom.getZ() +2*z };
 		 btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
 		 App->physics->GetWorld()->rayTest(btFrom, btTo, res);
 
