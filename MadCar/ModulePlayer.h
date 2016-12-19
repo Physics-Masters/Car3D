@@ -8,6 +8,7 @@ struct PhysVehicle3D;
 #define MAX_ACCELERATION 2000.0f
 #define TURN_DEGREES 25.0f * DEGTORAD
 #define BRAKE_POWER 1000.0f
+#define PLAYING_TIME 120.0f
 #define FRONTFLIP_TIME 3.0f
 #define BACKFLIP_TIME 2.0f
 #define SIDEFLIP_TIME 1.0f
