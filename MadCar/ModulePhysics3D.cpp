@@ -398,3 +398,7 @@ int	 DebugDrawer::getDebugMode() const
 {
 	return mode;
 }
+void ModulePhysics3D::DestroyBody(PhysBody3D & bodyA)
+{
+	world->removeRigidBody(bodyA.GetBody());
+}

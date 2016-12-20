@@ -10,13 +10,40 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 
 ModuleSceneIntro::~ModuleSceneIntro()
 {}
-
+update_status ModuleSceneIntro::PreUpdate(float dt)
+{
+	p2List_item<PhysBody3D*>* temp = sensors.getFirst();
+	for (temp; temp != nullptr; temp = temp->next)
+	{
+		if (temp->data->Coin == true)
+		{
+			App->physics->DestroyBody(*temp->data);
+		}
+	}
+	return UPDATE_CONTINUE;
+}
 // Load assets
 bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-
+	//start
+	Vehicle.size = vec3(3, 2, 2);
+	btVector3 pos = App->player->GetVehiclePosition();
+	
+	Vehicle.SetPos(pos.getX(), pos.getY(), pos.getZ());
+	VehicleCollider = App->physics->AddBody(Vehicle, 0);
+	VehicleCollider->SetAsSensor(true);
+	VehicleCollider->collision_listeners.add(this);
+	//COINS
+	Coin1.height = 1;
+	Coin1.radius = 2;
+	Coin1.SetPos(0, 10, 0);
+	Coin1Body = App->physics->AddBody(Coin1,0);
+	Coin1Body->SetAsSensor(true);
+	Coin1Body->collision_listeners.add(this);
+	sensors.add(Coin1Body);
+	//COINS
 	c1.size = vec3(100, 10, 100);
 	c1.color = Brown;
 	c1body = App->physics->AddBody(c1, 0);
@@ -24,7 +51,11 @@ bool ModuleSceneIntro::Start()
 	bed.SetPos(0, -25, 150);
 	bed.color =Indigo;
 	bedbody = App->physics->AddBody(bed, 0);
-	//B1
+	//plane -1
+	p2.size = vec3(1000, 10, 1000);
+	p2.SetPos(0,-50,0);
+	p2.color = Brown;
+	//b1
 	b1.size = vec3(5, 5, 5);
 	b1.color = Brown;
 	b1.SetPos(43, 25, 100);
@@ -255,8 +286,9 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane p(0, 1, 0, 0);
+	
 	//p.axis = true;
-	//p.Render();
+	p2.Render();
 	BWall.Render();
 	c1.Render();
 	wall1.Render();
@@ -298,7 +330,10 @@ update_status ModuleSceneIntro::Update(float dt)
 	w8D.Render();
 	FWall.Render();
 	//Render lights
+	btVector3 pos = App->player->GetVehiclePosition();
 	
+	
+	VehicleCollider->SetTransform(&App->player->vehicle_transf);
 	light2.Render();
 	light1.Render();
 	bridge1.Render();
@@ -308,5 +343,13 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+	if (sensors.find(body1) != -1)
+	{
+     		body1->Coin = true;
+	}
+	if (sensors.find(body2) != -1)
+	{
+		body2->Coin = true;
+	}
 }
 

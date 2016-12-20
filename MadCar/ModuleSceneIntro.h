@@ -3,7 +3,7 @@
 #include "p2DynArray.h"
 #include "Globals.h"
 #include "Primitive.h"
-
+#include "PhysVehicle3D.h"
 #define MAX_SNAKE 2
 
 struct PhysBody3D;
@@ -16,6 +16,7 @@ public:
 	~ModuleSceneIntro();
 
 	bool Start();
+	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	bool CleanUp();
 
@@ -88,6 +89,7 @@ public:
 	Cube InvWall;
 	Cube BWall;
 	PhysBody3D*BWallbody;
+	Cube p2;
 	//Wallride
 	Cube w1;
 	PhysBody3D* w1body;
@@ -128,4 +130,11 @@ public:
 	//BEd
 	Cube bed;
 	PhysBody3D* bedbody;
+	//vehicle
+	Cube Vehicle;
+	PhysBody3D* VehicleCollider;
+	//sensors
+	Cylinder Coin1;
+	PhysBody3D* Coin1Body;
+	p2List<PhysBody3D*> sensors;
 };

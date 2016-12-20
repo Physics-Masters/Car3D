@@ -13,6 +13,7 @@ struct PhysBody3D
 public:
 	PhysBody3D(btRigidBody* body);
 	~PhysBody3D();
+	bool Coin = false;
 
 	void Push(float x, float y, float z);
 	void flip(float x, float y, float z);
@@ -21,12 +22,13 @@ public:
 	void SetPos(float x, float y, float z);
 	void SetAsSensor(bool is_sensor);
 	bool IsSensor() const;
+	
 	btRigidBody* GetBody();
 
 private:
 	btRigidBody* body = nullptr;
 	bool is_sensor = false;
-
+	
 public:
 	p2List<Module*> collision_listeners;
 };
