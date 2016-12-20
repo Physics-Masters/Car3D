@@ -21,7 +21,7 @@ public:
 	void SetPos(float x, float y, float z);
 	void SetAsSensor(bool is_sensor);
 	bool IsSensor() const;
-	PhysBody3D* GetBody();
+	btRigidBody* GetBody();
 
 private:
 	btRigidBody* body = nullptr;

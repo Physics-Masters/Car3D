@@ -26,7 +26,7 @@ struct VehicleInfo
 	
 	vec3* chassis_size;
 	vec3* chassis_offset;
-	
+	vec3* chassis_color;
 	uint  num_chassis;
 
 	float mass;

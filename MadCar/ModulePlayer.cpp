@@ -46,7 +46,14 @@ bool ModulePlayer::Start()
 	car.chassis_offset[5].Set(0, 1.5f, -2.25f);
 	car.chassis_offset[6].Set(0, 0.6f, -0.6f);
 	
-	
+	car.chassis_color = new vec3[car.num_chassis];
+	car.chassis_color[0] = { Blue.r, Blue.g, Blue.b };
+	car.chassis_color[1] = { Gold.r, Gold.g, Gold.b };//Gold;
+	car.chassis_color[2] = { Blue.r, Blue.g, Blue.b };// Blue;
+	car.chassis_color[3] = { Gold.r, Gold.g, Gold.b };// Gold;
+	car.chassis_color[4] = { Black.r, Black.g, Black.b };//Black;
+	car.chassis_color[5] = { Black.r, Black.g, Black.b };//Black;
+	car.chassis_color[6] = { Gold.r, Gold.g, Gold.b };//Gold;
 
 	car.mass = 500.0f;
 	car.suspensionStiffness = 15.88f;
@@ -127,7 +134,7 @@ bool ModulePlayer::Start()
 	
 	vehicle->SetPos(0.0f, 12.0f, 10.0f);
 	
-	carbody = vehicle->GetBody();
+	
 
 	originalpos = new float[16];
 	vehicle->GetTransform(originalpos);
@@ -183,12 +190,13 @@ bool ModulePlayer::CleanUp()
  void ModulePlayer::Reset()
  {
 	 // Reset game;
-	 //vehicle->SetPos(0, 12, 10);
 	 vehicle->SetTransform(originalpos);
 	 play = READY;	 
 	 gameplaytimer = PLAYING_TIME;
 	 score = 0;
 	 endflip = 0.0;
+	 vehicle->GetBody()->setLinearVelocity({ 0.0f, 0.0f, 0.0f });
+	 vehicle->GetBody()->setAngularVelocity({ 0.0f, 0.0f, 0.0f });
 	
  }
 
