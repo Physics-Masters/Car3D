@@ -113,7 +113,7 @@ bool ModuleSceneIntro::Start()
 	bridge1.size = vec3(10, 0.2, 50);
 	bridge1.SetPos(-20, 7.6, 170);
 	bridge1.SetRotation(-20, vec3(0, 1, 0));
-	bridge1.color = Brown;
+	bridge1.color = Glass;
 	bridge1body = App->physics->AddBody(bridge1, 0);
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
@@ -272,6 +272,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	//Render lights
 	light1.Render();
 	light2.Render();
+	bridge1.Render();
 	return UPDATE_CONTINUE;
 }
 

@@ -20,3 +20,4 @@ Color Grey = Color(0.50f, 0.50f, 0.50f);
 Color White = Color(1.00f, 1.00f, 1.00f);
 Color Brown = Color(0.545f, 0.271f, 0.075f);
 Color Indigo = Color(0.580, 0.000, 0.827);
+Color Glass = Color(0.251, 0.878, 0.816,0.5);
