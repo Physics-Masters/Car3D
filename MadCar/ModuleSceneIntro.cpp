@@ -35,7 +35,7 @@ bool ModuleSceneIntro::Start()
 	b2.SetPos(43, 30, 100);
 	b2body = App->physics->AddBody(b2, 2);
 	//wall 1
-	wall1.size = vec3(10, 200, 500);
+	wall1.size = vec3(10, 300,800);
 	wall1.color = Blue;
 	wall1.SetPos(55, 100, 150);
 	wall1body = App->physics->AddBody(wall1, 0);
@@ -73,6 +73,12 @@ bool ModuleSceneIntro::Start()
 	ramp4.SetPos(43, 32, 142);
 	ramp4.color = SpringGreen;
 	ramp4body = App->physics->AddBody(ramp4, 0);
+	//ramp to secret room 
+	ramp5.size = vec3(15, 0.1, 45);
+	ramp5.SetRotation(-30, vec3(1, 0, 0));
+	ramp5.SetPos(43, 65, 295);
+	ramp5.color = SpringGreen;
+	ramp5body = App->physics->AddBody(ramp5, 0);
 	//stand 1
 	stand1.size = vec3(15, 1, 100);
 	stand1.SetPos(43, 21, 72);
@@ -84,6 +90,25 @@ bool ModuleSceneIntro::Start()
 	c3.SetPos(43, 55, 250);
 	c3.color = Brown;
 	c3body = App->physics->AddBody(c3, 0);
+	//Stand 3
+	stand3.size = vec3(15, 6, 50);
+	stand3.SetPos(43, 80, 405);
+	stand3.color = Brown;
+	stand3body = App->physics->AddBody(stand3, 0);
+	//SECRET ROOM
+	InvWall.size = vec3(100, 500, 1);
+	InvWall.SetPos(0, 74, 415);
+	InvWall.color = Invisible;
+	g1.size = vec3(100, 20, 90);
+	g1.SetPos(0, 73, 475);
+	g1.color = Brown;
+	g1body = App->physics->AddBody(g1, 0);
+	BWall.size = vec3(800, 300, 10);
+	BWall.SetPos(0, 100, 500);
+	BWall.color = Blue;
+	BWallbody = App->physics->AddBody(BWall, 0);
+	
+	//
 	//Box1
 	box1.size = vec3(30, 15, 70);
 	box1.SetPos(0, 0, 120);
@@ -139,7 +164,7 @@ bool ModuleSceneIntro::Start()
 	w2body = App->physics->AddBody(w2, 0);
 	w3.size = vec3(100, 6, 6);
 	w3.SetRotation(-30, vec3(1, 0, 0));
-	w3.SetPos(0, 6.5, 370);
+	w3.SetPos(0, 6.4, 370);
 	w3.color = Brown;
 	w3body = App->physics->AddBody(w3, 0);
 	w4.size = vec3(100, 6, 6);
@@ -210,7 +235,7 @@ bool ModuleSceneIntro::Start()
 	w8D.color = Brown;
 	w8Dbody = App->physics->AddBody(w8D, 0);*/
 	//FWALL
-	FWall.size = vec3(100, 6, 100);
+	FWall.size = vec3(100, 6, 50);
 	FWall.SetRotation(-80, vec3(1, 0, 0));
 	FWall.SetPos(0, 49, 391);
 	FWall.color = Brown;
@@ -232,14 +257,16 @@ update_status ModuleSceneIntro::Update(float dt)
 	Plane p(0, 1, 0, 0);
 	//p.axis = true;
 	//p.Render();
-	
+	BWall.Render();
 	c1.Render();
 	wall1.Render();
-	
+	InvWall.Render();
+	g1.Render();
 	ramp1.Render();
 	
 	ramp3.Render();
 	ramp4.Render();
+	ramp5.Render();
 	stand1.Render();
 	c3.Render();
 	box1.Render();
@@ -251,6 +278,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	Table1.Render();
 	Table2.Render();
 	bed.Render();
+	stand3.Render();
 	//wallride
 	w1.Render();
 	w2.Render();

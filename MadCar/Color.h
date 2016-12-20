@@ -45,3 +45,4 @@ extern Color Brown;
 extern Color LightColor;
 extern Color Indigo;
 extern Color Glass;
+extern Color Invisible;

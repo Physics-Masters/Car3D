@@ -76,10 +76,18 @@ public:
 	PhysBody3D* ramp5body;
 	Cube stand1;
 	PhysBody3D* stand1body;
+	Cube stand3;
+	PhysBody3D* stand3body;
 	Cube c3;
 	PhysBody3D* c3body;
 	Cube bridge1;
 	PhysBody3D* bridge1body;
+	//Secret Room
+	Cube g1;
+	PhysBody3D*g1body;
+	Cube InvWall;
+	Cube BWall;
+	PhysBody3D*BWallbody;
 	//Wallride
 	Cube w1;
 	PhysBody3D* w1body;
