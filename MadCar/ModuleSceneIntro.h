@@ -72,6 +72,8 @@ public:
 	PhysBody3D* ramp3body;
 	Cube ramp4;
 	PhysBody3D* ramp4body;
+	Cube ramp5;
+	PhysBody3D* ramp5body;
 	Cube stand1;
 	PhysBody3D* stand1body;
 	Cube c3;

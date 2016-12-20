@@ -40,12 +40,12 @@ bool ModuleSceneIntro::Start()
 	wall1.SetPos(55, 100, 150);
 	wall1body = App->physics->AddBody(wall1, 0);
 	//Light 1
-	light1.size = vec3(350, 20, 20);
+	light1.size = vec3(350, 20, 0);
 	light1.SetRotation(30, vec3(0, 0, 1));
 	light1.SetPos(50, 50, 200);
 	light1.color = LightColor;
 	//Light 1
-	light2.size = vec3(350, 20, 20);
+	light2.size = vec3(350, 20, 0);
 	light2.SetRotation(30, vec3(0, 0, 1));
 	light2.SetPos(50, 50, 100);
 	light2.color = LightColor;
@@ -59,7 +59,7 @@ bool ModuleSceneIntro::Start()
 	ramp2.size = vec3(15, 0.1, 45);
 	ramp2.SetRotation(-30, vec3(1, 0, 0));
 	ramp2.SetPos(43, 10,0);
-	ramp2.color = Brown;
+	ramp2.color = Glass;
 	ramp2body = App->physics->AddBody(ramp2, 0);
 	//ramp to respawn
 	ramp3.size = vec3(100, 6.2, 10);
@@ -68,9 +68,9 @@ bool ModuleSceneIntro::Start()
 	ramp3.color = Brown;
 	ramp3body = App->physics->AddBody(ramp3, 0);
 	//ramp to stand 2
-	ramp4.size = vec3(15, 0.1, 8);
-	ramp4.SetRotation(-20, vec3(1, 0, 0));
-	ramp4.SetPos(43, 23, 122);
+	ramp4.size = vec3(15, 0.1, 45);
+	ramp4.SetRotation(-30, vec3(1, 0, 0));
+	ramp4.SetPos(43, 32, 142);
 	ramp4.color = SpringGreen;
 	ramp4body = App->physics->AddBody(ramp4, 0);
 	//stand 1
@@ -81,7 +81,7 @@ bool ModuleSceneIntro::Start()
 
 	//stand 2
 	c3.size = vec3(15, 1, 70);
-	c3.SetPos(43, 21, 190);
+	c3.SetPos(43, 55, 250);
 	c3.color = Brown;
 	c3body = App->physics->AddBody(c3, 0);
 	//Box1
@@ -237,7 +237,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	wall1.Render();
 	
 	ramp1.Render();
-	ramp2.Render();
+	
 	ramp3.Render();
 	ramp4.Render();
 	stand1.Render();
@@ -270,9 +270,11 @@ update_status ModuleSceneIntro::Update(float dt)
 	w8D.Render();
 	FWall.Render();
 	//Render lights
-	light1.Render();
+	
 	light2.Render();
+	light1.Render();
 	bridge1.Render();
+	ramp2.Render();
 	return UPDATE_CONTINUE;
 }
 
