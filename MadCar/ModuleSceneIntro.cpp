@@ -39,7 +39,7 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 	//start
-	
+	App->audio->PlayMusic("MUSIC/NotMarioKart.ogg");
 	//COINS
 	Coin1.height = 1;
 	Coin1.radius = 2;
