@@ -75,4 +75,6 @@ public:
 	int score;
 	Timer fliptimer;
 	float endflip;
+	int turbo;
+	int flip;
 };

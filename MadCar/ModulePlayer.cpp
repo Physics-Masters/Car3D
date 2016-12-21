@@ -22,7 +22,8 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
-
+	flip = App->audio->LoadFx("MUSIC/AplauseSound.wav");
+	turbo = App->audio->LoadFx("MUSIC/turboSound.wav");
 	VehicleInfo car;
 	
 	// Car properties ----------------------------------------
@@ -222,6 +223,7 @@ bool ModulePlayer::CleanUp()
 		 int t;
 		 if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
 		 {
+			 App->audio->PlayFx(turbo);
 			 t = 2;
 		 }
 		 else t = 1;
@@ -370,6 +372,7 @@ bool ModulePlayer::CleanUp()
 		 fliptimer.Stop();
 		 vehiclestate = AIR;
 		 vehicle->flip(-1.5*X.x, -1.5*X.y, -1.5*X.z);
+		 App->audio->PlayFx(flip);
 	 }
 	 if (vehiclestate == BACKFLIP && endflip >= BACKFLIP_TIME)
 	 {
@@ -377,6 +380,7 @@ bool ModulePlayer::CleanUp()
 		 fliptimer.Stop();
 		 vehiclestate = AIR;
 		 vehicle->flip(X.x, X.y, X.z);
+		 App->audio->PlayFx(flip);
 	 }
 	 if (vehiclestate == LEFTFLIP || vehiclestate == RIGHTFLIP)
 	 {
@@ -388,7 +392,7 @@ bool ModulePlayer::CleanUp()
 				 vehicle->flip(Z.x / 3, Z.y / 3, Z.z / 3);
 			 else  vehicle->flip(-Z.x / 3, -Z.y / 3, -Z.z / 3);
 			 vehiclestate = AIR;
-			
+			 App->audio->PlayFx(flip);
 		 }
 	 }
 	 if (vehiclestate == TURNRIGHT || vehiclestate == TURNLEFT)
@@ -401,7 +405,7 @@ bool ModulePlayer::CleanUp()
 				 vehicle->flip(-1.5*Y.x, -1.5*Y.y, -1.5*Y.z);
 			 else vehicle->flip(1.5*Y.x, 1.5*Y.y, 1.5*Y.z);
 			 vehiclestate = AIR;
-			
+			 App->audio->PlayFx(flip);
 		 }
 	 }
  }
