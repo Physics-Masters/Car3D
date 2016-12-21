@@ -108,13 +108,13 @@ bool ModuleSceneIntro::Start()
 	ramp4.size = vec3(15, 0.1, 45);
 	ramp4.SetRotation(-30, vec3(1, 0, 0));
 	ramp4.SetPos(43, 32, 142);
-	ramp4.color = SpringGreen;
+	ramp4.color = Glass;
 	ramp4body = App->physics->AddBody(ramp4, 0);
 	//ramp to secret room 
 	ramp5.size = vec3(15, 0.1, 45);
 	ramp5.SetRotation(-30, vec3(1, 0, 0));
 	ramp5.SetPos(43, 65, 295);
-	ramp5.color = SpringGreen;
+	ramp5.color = Glass;
 	ramp5body = App->physics->AddBody(ramp5, 0);
 	//stand 1
 	stand1.size = vec3(15, 1, 100);
@@ -300,11 +300,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	wall1.Render();
 	InvWall.Render();
 	g1.Render();
-	ramp1.Render();
 	
-	ramp3.Render();
-	ramp4.Render();
-	ramp5.Render();
 	stand1.Render();
 	c3.Render();
 	box1.Render();
@@ -358,7 +354,11 @@ update_status ModuleSceneIntro::Update(float dt)
 	//Render lights
 	btVector3 pos = App->player->GetVehiclePosition();
 	
-	
+	ramp1.Render();
+
+	ramp3.Render();
+	ramp4.Render();
+	ramp5.Render();
 	
 	light2.Render();
 	light1.Render();

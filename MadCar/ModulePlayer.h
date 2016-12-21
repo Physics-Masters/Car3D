@@ -77,4 +77,5 @@ public:
 	float endflip;
 	int turbo;
 	int flip;
+	int jump;
 };

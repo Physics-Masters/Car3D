@@ -24,6 +24,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 	flip = App->audio->LoadFx("MUSIC/AplauseSound.wav");
 	turbo = App->audio->LoadFx("MUSIC/turboSound.wav");
+	jump = turbo = App->audio->LoadFx("MUSIC/JumpSound.wav");
 	VehicleInfo car;
 	
 	// Car properties ----------------------------------------
@@ -267,6 +268,7 @@ bool ModulePlayer::CleanUp()
 		 {
 			 vehiclestate = AIR;
 			 vehicle->Push(0, 10 * vehicle->info.mass, 0);
+			 App->audio->PlayFx(jump);
 		 }
 	 }	
 	 
