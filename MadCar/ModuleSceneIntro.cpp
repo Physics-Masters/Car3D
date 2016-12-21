@@ -13,13 +13,24 @@ ModuleSceneIntro::~ModuleSceneIntro()
 update_status ModuleSceneIntro::PreUpdate(float dt)
 {
 	p2List_item<PhysBody3D*>* temp = sensors.getFirst();
-	for (temp; temp != nullptr; temp = temp->next)
+	p2List_item<Cylinder>* temp2 = sensorsR.getFirst();
+	for (temp; temp != nullptr ; temp = temp->next )
 	{
-		if (temp->data->Coin == true)
+		if (temp != nullptr && temp2 != nullptr)
 		{
-			App->physics->DestroyBody(*temp->data);
+			if (temp->data->Coin == true)
+			{
+				
+				App->physics->DestroyBody(*temp->data);
+				
+
+				
+			}
 		}
+		
 	}
+	
+	
 	return UPDATE_CONTINUE;
 }
 // Load assets
@@ -43,6 +54,7 @@ bool ModuleSceneIntro::Start()
 	Coin1Body->SetAsSensor(true);
 	Coin1Body->collision_listeners.add(this);
 	sensors.add(Coin1Body);
+	sensorsR.add(Coin1);
 	//COINS
 	c1.size = vec3(100, 10, 100);
 	c1.color = Brown;
@@ -329,6 +341,18 @@ update_status ModuleSceneIntro::Update(float dt)
 	w7D.Render();
 	w8D.Render();
 	FWall.Render();
+	Color temp1;
+	if (Coin1.color.r < 1 )
+	{
+		temp1.Set(Coin1.color.r + 0.01, Coin1.color.g , Coin1.color.b-0.01);
+	}
+	else
+	{
+		//temp.Set(Coin1.color.r - 0.01, Coin1.color.g , Coin1.color.b );
+	}
+	
+	Coin1.color = temp1;
+	Coin1.Render();
 	//Render lights
 	btVector3 pos = App->player->GetVehiclePosition();
 	

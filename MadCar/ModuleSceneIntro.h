@@ -137,4 +137,5 @@ public:
 	Cylinder Coin1;
 	PhysBody3D* Coin1Body;
 	p2List<PhysBody3D*> sensors;
+	p2List<Cylinder> sensorsR;
 };
