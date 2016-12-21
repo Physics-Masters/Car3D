@@ -369,12 +369,14 @@ bool ModulePlayer::CleanUp()
 		 score += 200;
 		 fliptimer.Stop();
 		 vehiclestate = AIR;
+		 vehicle->flip(-1.5*X.x, -1.5*X.y, -1.5*X.z);
 	 }
 	 if (vehiclestate == BACKFLIP && endflip >= BACKFLIP_TIME)
 	 {
 		 score += 200;
 		 fliptimer.Stop();
 		 vehiclestate = AIR;
+		 vehicle->flip(X.x, X.y, X.z);
 	 }
 	 if (vehiclestate == LEFTFLIP || vehiclestate == RIGHTFLIP)
 	 {
@@ -382,7 +384,11 @@ bool ModulePlayer::CleanUp()
 		 {
 			 score += 200;
 			 fliptimer.Stop();
+			 if (vehiclestate == LEFTFLIP)
+				 vehicle->flip(Z.x / 3, Z.y / 3, Z.z / 3);
+			 else  vehicle->flip(-Z.x / 3, -Z.y / 3, -Z.z / 3);
 			 vehiclestate = AIR;
+			
 		 }
 	 }
 	 if (vehiclestate == TURNRIGHT || vehiclestate == TURNLEFT)
@@ -391,7 +397,11 @@ bool ModulePlayer::CleanUp()
 		 {
 			 score += 200;
 			 fliptimer.Stop();
+			 if (vehiclestate == TURNRIGHT)
+				 vehicle->flip(-1.5*Y.x, -1.5*Y.y, -1.5*Y.z);
+			 else vehicle->flip(1.5*Y.x, 1.5*Y.y, 1.5*Y.z);
 			 vehiclestate = AIR;
+			
 		 }
 	 }
  }

@@ -39,13 +39,7 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 	//start
-	Vehicle.size = vec3(3, 2, 2);
-	btVector3 pos = App->player->GetVehiclePosition();
 	
-	Vehicle.SetPos(pos.getX(), pos.getY(), pos.getZ());
-	VehicleCollider = App->physics->AddBody(Vehicle, 0);
-	VehicleCollider->SetAsSensor(true);
-	VehicleCollider->collision_listeners.add(this);
 	//COINS
 	Coin1.height = 1;
 	Coin1.radius = 2;
@@ -365,7 +359,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	btVector3 pos = App->player->GetVehiclePosition();
 	
 	
-	VehicleCollider->SetTransform(&App->player->vehicle_transf);
+	
 	light2.Render();
 	light1.Render();
 	bridge1.Render();
@@ -375,13 +369,10 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (sensors.find(body1) != -1)
+	if (Coin1Body == body2 || Coin1Body == body1)
 	{
      		body1->Coin = true;
 	}
-	if (sensors.find(body2) != -1)
-	{
-		body2->Coin = true;
-	}
+	
 }
 

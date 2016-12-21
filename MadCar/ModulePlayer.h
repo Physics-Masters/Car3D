@@ -9,10 +9,10 @@ struct PhysVehicle3D;
 #define TURN_DEGREES 25.0f * DEGTORAD
 #define BRAKE_POWER 1000.0f
 #define PLAYING_TIME 120.0f
-#define FRONTFLIP_TIME 3.0f
-#define BACKFLIP_TIME 2.0f
-#define SIDEFLIP_TIME 1.0f
-#define TURNSIDE_TIME 2.0F
+#define FRONTFLIP_TIME 1.5f
+#define BACKFLIP_TIME 2.4f
+#define SIDEFLIP_TIME 2.0f
+#define TURNSIDE_TIME 1.7F
 
 
 enum Gamestate

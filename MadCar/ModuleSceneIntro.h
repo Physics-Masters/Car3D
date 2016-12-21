@@ -23,22 +23,15 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
-	/*
-	PhysBody3D* pb_snake[MAX_SNAKE];
-	Sphere s_snake[MAX_SNAKE];
-
-	PhysBody3D* pb_snake2[MAX_SNAKE];
-	Sphere s_snake2[MAX_SNAKE];
-	*/
-
-	PhysBody3D* pb_chassis;
+	
+	/*PhysBody3D* pb_chassis;
 	Cube p_chassis;
 
 	PhysBody3D* pb_wheel;
 	Cylinder p_wheel;
 
 	PhysBody3D* pb_wheel2;
-	Cylinder p_wheel2;
+	Cylinder p_wheel2;*/
 	Cube wall1;
 	Cube light1;
 	Cube light2;
@@ -131,8 +124,8 @@ public:
 	Cube bed;
 	PhysBody3D* bedbody;
 	//vehicle
-	Cube Vehicle;
-	PhysBody3D* VehicleCollider;
+//	Cube Vehicle;
+//	PhysBody3D* VehicleCollider;
 	//sensors
 	Cylinder Coin1;
 	PhysBody3D* Coin1Body;
