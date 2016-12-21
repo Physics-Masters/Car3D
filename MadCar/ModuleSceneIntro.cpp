@@ -22,7 +22,7 @@ update_status ModuleSceneIntro::PreUpdate(float dt)
 			{
 				
 				App->physics->DestroyBody(*temp->data);
-				
+				sensorsR.del(temp2);
 
 				
 			}
@@ -342,17 +342,25 @@ update_status ModuleSceneIntro::Update(float dt)
 	w8D.Render();
 	FWall.Render();
 	Color temp1;
-	if (Coin1.color.r < 1 )
+	
+	p2List_item<Cylinder>* temp2 = sensorsR.getFirst();
+	for (temp2; temp2 != nullptr; temp2 = temp2->next)
 	{
-		temp1.Set(Coin1.color.r + 0.01, Coin1.color.g , Coin1.color.b-0.01);
-	}
-	else
-	{
-		//temp.Set(Coin1.color.r - 0.01, Coin1.color.g , Coin1.color.b );
+		if (temp2->data.color.r < 1)
+		{
+			temp1.Set(temp2->data.color.r + 0.01, temp2->data.color.g, temp2->data.color.b);
+		}
+		else
+		{
+			//temp1.Set(Coin1.color.r - 0.01, Coin1.color.g, Coin1.color.b);
+		}
+		temp2->data.color = temp1;
+		temp2->data.Render();
+		
 	}
 	
-	Coin1.color = temp1;
-	Coin1.Render();
+	
+	//Coin1.Render();
 	//Render lights
 	btVector3 pos = App->player->GetVehiclePosition();
 	
