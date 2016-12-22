@@ -116,7 +116,7 @@ bool ModuleSceneIntro::Start()
 	//ramp to respawn
 	ramp3.size = vec3(100, 6.2, 10);
 	ramp3.SetRotation(30, vec3(1, 0, 0));
-	ramp3.SetPos(0, 0, 52);
+	ramp3.SetPos(0, -0.2, 52.9);
 	ramp3.color = Brown;
 	ramp3body = App->physics->AddBody(ramp3, 0);
 	//ramp to stand 2
@@ -360,7 +360,8 @@ update_status ModuleSceneIntro::Update(float dt)
 			//App->audio->PlayFx(CoinSound);
 			temp1.Set(temp2->data.color.r + 0.01, temp2->data.color.g + 0.01, temp2->data.color.b +0.01);
 			temp2->data.color = temp1;
-		}
+
+					}
 		else
 		{
 			//temp1.Set(0,1,0);
