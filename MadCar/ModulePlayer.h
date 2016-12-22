@@ -11,7 +11,7 @@ struct PhysVehicle3D;
 #define PLAYING_TIME 120.0f
 #define FRONTFLIP_TIME 1.5f
 #define BACKFLIP_TIME 2.4f
-#define SIDEFLIP_TIME 2.0f
+#define SIDEFLIP_TIME 1.75f
 #define TURNSIDE_TIME 1.7F
 
 

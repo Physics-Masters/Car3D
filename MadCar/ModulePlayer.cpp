@@ -209,7 +209,6 @@ bool ModulePlayer::CleanUp()
 	
 	 if (play == PLAYING)
 	 {
-			
 		 bool vehicleonground = CheckVehicleCollision(Y.x, Y.y, Y.z);
 		 if (vehicleonground == true && vehiclestate != GROUND)
 		 {
@@ -224,8 +223,6 @@ bool ModulePlayer::CleanUp()
 		 int t;
 		 if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
 		 {
-			 
-			 
 			 t = 2;
 		 }
 		 else t = 1;
@@ -418,24 +415,23 @@ bool ModulePlayer::CleanUp()
 
  bool ModulePlayer::CheckVehicleCollision(float x, float y, float z)
  {
-	 for (int i = 0; i < vehicle->info.num_wheels; ++i)
+	
+	 if (y > 0)
 	 {
-		 
-		 btVector3 btFrom = vehicle->vehicle->getWheelTransformWS(i).getOrigin();
-		 btVector3 btTo = { btFrom.getX() - x, btFrom.getY() - y, btFrom.getZ() - z };
+		 btVector3 btFrom = GetVehiclePosition();
+		 btVector3 btTo = { btFrom.getX() - x / 2, btFrom.getY() - y / 2, btFrom.getZ() - z / 2 };
 		 btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
 		 App->physics->GetWorld()->rayTest(btFrom, btTo, res);
-
 		 if (res.hasHit() == true)
 		 {
 			 return true;
 		 }
 	 }
-	 for (int i = 0; i < vehicle->info.num_wheels; ++i)
+	 else for (int i = 0; i < vehicle->info.num_wheels; ++i)
 	 {
 
 		 btVector3 btFrom = vehicle->vehicle->getWheelTransformWS(i).getOrigin();
-		 btVector3 btTo = { btFrom.getX() +2*x, btFrom.getY() +2*y, btFrom.getZ() +2*z };
+		 btVector3 btTo = { btFrom.getX() +x, btFrom.getY() +y, btFrom.getZ() +z };
 		 btCollisionWorld::ClosestRayResultCallback res(btFrom, btTo);
 		 App->physics->GetWorld()->rayTest(btFrom, btTo, res);
 
@@ -458,6 +454,8 @@ bool ModulePlayer::CleanUp()
 	 X = { vehicle_transf[0],vehicle_transf[1],vehicle_transf[2] };
 	 Y = { vehicle_transf[4],vehicle_transf[5],vehicle_transf[6] };
 	 Z = { vehicle_transf[8],vehicle_transf[9],vehicle_transf[10] };
+
+	
 
 	 //Car can move
 	 Move();
