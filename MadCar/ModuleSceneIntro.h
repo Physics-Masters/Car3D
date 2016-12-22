@@ -138,6 +138,24 @@ public:
 	//sensors
 	Cylinder Coin1;
 	PhysBody3D* Coin1Body;
+	Cylinder Coin2;
+	PhysBody3D* Coin2Body;
+	Cylinder Coin3;
+	PhysBody3D* Coin3Body;
+	Cylinder Coin4;
+	PhysBody3D* Coin4Body;
+	Cylinder Coin5;
+	PhysBody3D* Coin5Body;
+	Cylinder Coin6;
+	PhysBody3D* Coin6Body;
+	Cylinder Coin7;
+	PhysBody3D* Coin7Body;
+	Cylinder Coin8;
+	PhysBody3D* Coin8Body;
+	Cylinder Coin9;
+	PhysBody3D* Coin9Body;
+	Cylinder Coin10;
+	PhysBody3D* Coin10Body;
 	p2List<PhysBody3D*> sensors;
 	p2List<Cylinder> sensorsR;
 	Color temp1 = Gold;

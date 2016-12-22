@@ -8,7 +8,7 @@ struct PhysVehicle3D;
 #define MAX_ACCELERATION 2000.0f
 #define TURN_DEGREES 25.0f * DEGTORAD
 #define BRAKE_POWER 1000.0f
-#define PLAYING_TIME 150.0f
+#define PLAYING_TIME 10.0f
 #define FRONTFLIP_TIME 1.5f
 #define BACKFLIP_TIME 2.4f
 #define SIDEFLIP_TIME 1.75f
@@ -80,4 +80,5 @@ public:
 	int flip;
 	int jump;
 	int coins;
+	int finale;
 };

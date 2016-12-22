@@ -26,6 +26,7 @@ bool ModulePlayer::Start()
 	flip = App->audio->LoadFx("MUSIC/AplauseSound.wav");
 	turbo = App->audio->LoadFx("MUSIC/turboSound.wav");
 	jump = App->audio->LoadFx("MUSIC/JumpSound.wav");
+	finale = App->audio->LoadFx("MUSIC/TimeSound.wav");
 	VehicleInfo car;
 	
 	// Car properties ----------------------------------------
@@ -173,8 +174,10 @@ bool ModulePlayer::CleanUp()
 	 if (play == PLAYING)
 	 {
 		 gameplaytimer = PLAYING_TIME - time.Read()/1000.0f;
-		 if (gameplaytimer < 0)
+		 if (gameplaytimer <= 0)
 		 {
+			 App->audio->PlayFx(finale);
+
 			 play = END;
 			 time.Stop();
 		 }
