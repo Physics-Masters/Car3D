@@ -14,6 +14,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	score = 0;
 	endflip = 0.0f;
 	coins = COINS;
+	win = false;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -204,6 +205,7 @@ bool ModulePlayer::CleanUp()
 	 vehicle->GetBody()->setAngularVelocity({ 0.0f, 0.0f, 0.0f });
 	 App->scene_intro->SensorsReset();
 	 coins = COINS;
+	 win = false;
 	
  }
 
@@ -474,10 +476,20 @@ bool ModulePlayer::CleanUp()
 
 	 vehicle->Render();
 	 
+	 if (COINS - coins == 5 && win == false)
+	 {
+		 win = true;
+		 //audio win;
+	 }
+
 	 char title[80];
 	 int min = (int) gameplaytimer / 60;
 	 float sec = gameplaytimer - min * 60;
-	 sprintf_s(title, "%.1f Km/h Timer: %d:%.2f m:s Score %d Coins Left: %d", vehicle->GetKmh(), min, sec, score, coins);
+
+	 int coinstowin = 5 - (COINS - coins);
+	 if (coinstowin < 0)
+		 coinstowin = 0;
+	 sprintf_s(title, "%.1f Km/h Timer: %d:%.2f m:s Score %d Coins to win: %d Coins Left: %d", vehicle->GetKmh(), min, sec, score, coinstowin, coins);
 	 App->window->SetTitle(title);
 
 	 return UPDATE_CONTINUE;

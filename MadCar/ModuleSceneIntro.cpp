@@ -579,11 +579,6 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	/*if (Coin1Body == body2 || Coin1Body == body1)
-	{
-     		body1->Coin = true;
-			App->audio->PlayFx(CoinSound);
-	}*/
 	p2List_item<PhysBody3D*>* temp = sensors.getFirst();
 	for (; temp != nullptr; temp = temp->next)
 	{
@@ -591,6 +586,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		{
 			temp->data->Coin = true;
 			App->player->score += 2000;
+			App->player->coins--;
 			App->audio->PlayFx(CoinSound);
 		}
 	}
