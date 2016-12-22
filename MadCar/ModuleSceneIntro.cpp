@@ -65,6 +65,8 @@ bool ModuleSceneIntro::Start()
 	sensors.add(Coin1Body);
 	sensorsR.add(Coin1);
 	//COINS
+	//TOP
+	
 	c1.size = vec3(100, 10, 100);
 	c1.color = Brown;
 	c1body = App->physics->AddBody(c1, 0);
@@ -78,12 +80,12 @@ bool ModuleSceneIntro::Start()
 	p2.color = Brown;
 	//b1
 	b1.size = vec3(5, 5, 5);
-	b1.color = Brown;
+	b1.color = Glass;
 	b1.SetPos(43, 25, 100);
 	b1body = App->physics->AddBody(b1,2);
 	//b2
 	b2.size = vec3(5, 5, 5);
-	b2.color = Brown;
+	b2.color = Glass;
 	b2.SetPos(43, 30, 100);
 	b2body = App->physics->AddBody(b2, 2);
 	//wall 1
@@ -148,7 +150,7 @@ bool ModuleSceneIntro::Start()
 	stand3.color = Brown;
 	stand3body = App->physics->AddBody(stand3, 0);
 	//SECRET ROOM
-	InvWall.size = vec3(100, 500, 1);
+	InvWall.size = vec3(150, 500, 1);
 	InvWall.SetPos(0, 74, 415);
 	InvWall.color = Invisible;
 	g1.size = vec3(100, 20, 90);
@@ -289,9 +291,81 @@ bool ModuleSceneIntro::Start()
 	//FWALL
 	FWall.size = vec3(100, 6, 50);
 	FWall.SetRotation(-80, vec3(1, 0, 0));
-	FWall.SetPos(0, 49, 391);
+	FWall.SetPos(0, 49, 391.1);
 	FWall.color = Brown;
 	FWallbody = App->physics->AddBody(FWall, 0);
+	Top.size = vec3(100, 10, 50);
+	Top.SetPos(0, 72, 415);
+	Top.color = Brown;
+	topbody = App->physics->AddBody(Top, 0);
+	//
+	//2nd part of the level
+	bed2.size = vec3(101, 50, 250);
+	bed2.SetPos(-100, -40, 170);
+	bed2.color = Indigo;
+	bed2body = App->physics->AddBody(bed2, 0);
+	//box 3
+	box3.size = vec3(70, 15, 30);
+	box3.SetPos(-100, -7.5, 120);
+	box3.color = SpringGreen;
+	box3body = App->physics->AddBody(box3, 0);
+	//box 4
+	box4.size = vec3(30, 15, 30);
+	box4.SetPos(-120, -7.5, 170);
+	box4.color = SpringGreen;
+	box4body = App->physics->AddBody(box4, 0);
+	//box 5
+	box5.size = vec3(70, 15, 30);
+	box5.SetPos(-100, -7.5, 220);
+	box5.color = SpringGreen;
+	box5body = App->physics->AddBody(box5, 0);
+	//box 6
+	box6.size = vec3(25, 25, 15);
+	box6.SetPos(-50, -17.775, 170);
+	box6.SetRotation(-45, vec3(0, 0, 1));
+	box6.color = SpringGreen;
+	box6body = App->physics->AddBody(box6, 0);
+	//hinge1
+	//Hinge
+	base1.size = vec3(1, 25, 1);
+	base1.SetPos(-120, 0, 140);
+	base1.color = Red;
+	base1body = App->physics->AddBody(base1, 50);
+	swing1.size = vec3(1, 1, 1);
+	swing1.SetPos(-120, 0, 141);
+	swing1body = App->physics->AddBody(swing1, 0);
+	Hinge1 = App->physics->Add_Constraint_Hinge(*base1body, *swing1body, vec3(0, 0, 0.5), vec3(0, 0, -0.5), vec3(0, 0, 1), vec3(0, 0, 1));
+	Hinge1->enableAngularMotor(true, 4, 500);
+	//Hinge
+	base2.size = vec3(1, 25, 1);
+	base2.SetPos(-120, 0, 200);
+	base2.color = Red;
+	base2body = App->physics->AddBody(base2, 50);
+	swing2.size = vec3(1, 1, 1);
+	swing2.SetPos(-120, 0, 201);
+	swing2body = App->physics->AddBody(swing2, 0);
+	Hinge2 = App->physics->Add_Constraint_Hinge(*base2body, *swing2body, vec3(0, 0, 0.5), vec3(0, 0, -0.5), vec3(0, 0, 1), vec3(0, 0, 1));
+	Hinge2->enableAngularMotor(true, 4, 500);
+	//limits
+	Cube l1,l2, l3, l4, l5,l6;
+	l1.size = vec3(2, 100, 100);
+	l1.SetPos(-50, 50, 0);
+	l1body = App->physics->AddBody(l1, 0);
+	l2.size = vec3(2, 200, 250);
+	l2.SetPos(-50, 100, 405);
+	l2body = App->physics->AddBody(l2, 0);
+	l3.size = vec3(100, 200, 2);
+	l3.SetPos(-100, 50, 280);
+	l3body = App->physics->AddBody(l3, 0);
+	l4.size = vec3(100, 200, 2);
+	l4.SetPos(-100, 50, 50);
+	l4body = App->physics->AddBody(l4, 0);
+	l5.size = vec3(100, 200, 2);
+	l5.SetPos(0, 50, -50);
+	l5body = App->physics->AddBody(l5, 0);
+	l6.size = vec3(2, 200, 250);
+	l6.SetPos(-150, 75, 160);
+	l6body = App->physics->AddBody(l6, 0);
 	return ret;
 }
 
@@ -306,13 +380,17 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Plane p(0, 1, 0, 0);
+	//Plane p(0, 1, 0, 0);
 	//Hinge
 	
 	basebody->GetTransform(&base.transform);
 	base.Render();
 	swing.Render();
 	//p.axis = true;
+	b1body->GetTransform(&b1.transform);
+	b1.Render();
+	b2body->GetTransform(&b2.transform);
+	b2.Render();
 	p2.Render();
 	BWall.Render();
 	c1.Render();
@@ -350,7 +428,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	w7D.Render();
 	w8D.Render();
 	FWall.Render();
-	
+	Top.Render();
 	
 	p2List_item<Cylinder>* temp2 = sensorsR.getFirst();
 	p2List_item<PhysBody3D*>* temp3 = sensors.getFirst();
@@ -379,6 +457,18 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	
 	//Coin1.Render();
+	//Second part
+	bed2.Render();
+	box3.Render();
+	box4.Render();
+	box5.Render();
+	box6.Render();
+	base1body->GetTransform(&base1.transform);
+	base1.Render();
+	swing1.Render();
+	base2body->GetTransform(&base2.transform);
+	base2.Render();
+	swing2.Render();
 	//Render lights
 	btVector3 pos = App->player->GetVehiclePosition();
 	

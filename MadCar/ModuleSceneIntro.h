@@ -33,6 +33,8 @@ public:
 
 	PhysBody3D* pb_wheel2;
 	Cylinder p_wheel2;*/
+	Cube Top;
+	PhysBody3D* topbody;
 	Cube wall1;
 	Cube light1;
 	Cube light2;
@@ -139,6 +141,36 @@ public:
 	p2List<PhysBody3D*> sensors;
 	p2List<Cylinder> sensorsR;
 	Color temp1 = Gold;
+	//2nd part of the level
+	Cube bed2;
+	PhysBody3D* bed2body;
+	Cube box3;
+	PhysBody3D* box3body;
+	Cube box4;
+	PhysBody3D* box4body;
+	Cube box5;
+	PhysBody3D* box5body;
+	Cube box6;
+	PhysBody3D* box6body;
+	//hinge
+	Cube base1;
+	PhysBody3D* base1body;
+	Cube swing1;
+	PhysBody3D* swing1body;
+	btHingeConstraint *Hinge1;
+	//hinge 2
+	Cube base2;
+	PhysBody3D* base2body;
+	Cube swing2;
+	PhysBody3D* swing2body;
+	btHingeConstraint *Hinge2;
+	//LIMITS
+	PhysBody3D* l1body;
+	PhysBody3D* l2body;
+	PhysBody3D* l3body;
+	PhysBody3D* l4body;
+	PhysBody3D* l5body;
+	PhysBody3D* l6body;
 	//AUDIO
 	int CoinSound;
 };
