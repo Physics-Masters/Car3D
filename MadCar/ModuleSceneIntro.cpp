@@ -12,7 +12,7 @@ ModuleSceneIntro::~ModuleSceneIntro()
 {}
 update_status ModuleSceneIntro::PreUpdate(float dt)
 {
-	p2List_item<PhysBody3D*>* temp = sensors.getFirst();
+/*	p2List_item<PhysBody3D*>* temp = sensors.getFirst();
 	p2List_item<Cylinder>* temp2 = sensorsR.getFirst();
 	for (temp; temp != nullptr ; temp = temp->next )
 	{
@@ -30,7 +30,7 @@ update_status ModuleSceneIntro::PreUpdate(float dt)
 		
 	}
 	
-	
+	*/
 	return UPDATE_CONTINUE;
 }
 // Load assets
@@ -353,23 +353,27 @@ update_status ModuleSceneIntro::Update(float dt)
 	
 	
 	p2List_item<Cylinder>* temp2 = sensorsR.getFirst();
+	p2List_item<PhysBody3D*>* temp3 = sensors.getFirst();
 	for (temp2; temp2 != nullptr; temp2 = temp2->next)
 	{
-		if (temp2->data.color.b <1|| temp2->data.color.r <1 || temp2->data.color.g <1)
+		if (temp3->data->Coin == false)
 		{
-			//App->audio->PlayFx(CoinSound);
-			temp1.Set(temp2->data.color.r + 0.01, temp2->data.color.g + 0.01, temp2->data.color.b +0.01);
-			temp2->data.color = temp1;
+			if (temp2->data.color.b < 1 || temp2->data.color.r < 1 || temp2->data.color.g < 1)
+			{
+				//App->audio->PlayFx(CoinSound);
+				temp1.Set(temp2->data.color.r + 0.01, temp2->data.color.g + 0.01, temp2->data.color.b + 0.01);
+				temp2->data.color = temp1;
 
-					}
-		else
-		{
-			//temp1.Set(0,1,0);
-			temp1.Set(temp2->data.color.r - 0.81, temp2->data.color.g -0.81, temp2->data.color.b - 0.81);
-			temp2->data.color = temp1;
+			}
+			else
+			{
+				//temp1.Set(0,1,0);
+				temp1.Set(temp2->data.color.r - 0.81, temp2->data.color.g - 0.81, temp2->data.color.b - 0.81);
+				temp2->data.color = temp1;
+			}
+			//temp2->data.color = temp1;
+			temp2->data.Render();
 		}
-		//temp2->data.color = temp1;
-		temp2->data.Render();
 	}
 	
 
@@ -393,11 +397,29 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (Coin1Body == body2 || Coin1Body == body1)
+	/*if (Coin1Body == body2 || Coin1Body == body1)
 	{
      		body1->Coin = true;
 			App->audio->PlayFx(CoinSound);
+	}*/
+	p2List_item<PhysBody3D*>* temp = sensors.getFirst();
+	for (; temp != nullptr; temp = temp->next)
+	{
+		if ((temp->data == body1 && temp->data->Coin == false) || (temp->data == body2 && temp->data->Coin == false))
+		{
+			temp->data->Coin = true;
+			App->player->score += 2000;
+			App->audio->PlayFx(CoinSound);
+		}
 	}
-	
+}
+
+void ModuleSceneIntro::SensorsReset()
+{
+	p2List_item<PhysBody3D*>* temp = sensors.getFirst();
+	for (; temp != nullptr; temp = temp->next)
+	{
+			temp->data->Coin = false;
+	}
 }
 

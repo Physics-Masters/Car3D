@@ -199,6 +199,7 @@ bool ModulePlayer::CleanUp()
 	 endflip = 0.0;
 	 vehicle->GetBody()->setLinearVelocity({ 0.0f, 0.0f, 0.0f });
 	 vehicle->GetBody()->setAngularVelocity({ 0.0f, 0.0f, 0.0f });
+	 App->scene_intro->SensorsReset();
 	
  }
 
