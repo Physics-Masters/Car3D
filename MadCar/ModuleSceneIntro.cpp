@@ -42,11 +42,12 @@ bool ModuleSceneIntro::Start()
 	CoinSound = App->audio->LoadFx("MUSIC/FlipSound.wav");
 	App->audio->PlayMusic("MUSIC/NotMarioKart.ogg");
 	//Hinge
-	base.size = vec3(1, 7, 1);
-	base.SetPos(0, 10, 20);
+	base.size = vec3(1, 20, 1);
+	base.SetPos(-30, 14, 260);
+	base.color = Red;
 	basebody = App->physics->AddBody(base, 12);
 	swing.size = vec3(1, 1, 1);
-	swing.SetPos(0, 10, 21);
+	swing.SetPos(-30, 14, 261);
 	swingbody = App->physics->AddBody(swing, 0); 
 	btVector3 vec(0, 0.5, 0);
 	//Hinge = new btHingeConstraint(*basebody->GetBody(), *swingbody->GetBody(), btVector3(0, 0.5, 0), btVector3(0, 0.5, 0), btVector3(0, 1, 0), btVector3(0, 1, 0));
@@ -306,7 +307,11 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane p(0, 1, 0, 0);
+	//Hinge
 	
+	basebody->GetTransform(&base.transform);
+	base.Render();
+	swing.Render();
 	//p.axis = true;
 	p2.Render();
 	BWall.Render();
