@@ -81,5 +81,6 @@ public:
 	int jump;
 	int coins;
 	int finale;
+	int WinSound;
 	bool win;
 };

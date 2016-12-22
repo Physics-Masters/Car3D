@@ -28,6 +28,7 @@ bool ModulePlayer::Start()
 	turbo = App->audio->LoadFx("MUSIC/turboSound.wav");
 	jump = App->audio->LoadFx("MUSIC/JumpSound.wav");
 	finale = App->audio->LoadFx("MUSIC/TimeSound.wav");
+	WinSound = App->audio->LoadFx("MUSIC/WinSound.wav");
 	VehicleInfo car;
 	
 	// Car properties ----------------------------------------
@@ -479,7 +480,7 @@ bool ModulePlayer::CleanUp()
 	 if (COINS - coins == 5 && win == false)
 	 {
 		 win = true;
-		 //audio win;
+		 App->audio->PlayFx(WinSound);
 	 }
 
 	 char title[80];
