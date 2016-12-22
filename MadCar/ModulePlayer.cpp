@@ -24,7 +24,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 	flip = App->audio->LoadFx("MUSIC/AplauseSound.wav");
 	turbo = App->audio->LoadFx("MUSIC/turboSound.wav");
-	jump = turbo = App->audio->LoadFx("MUSIC/JumpSound.wav");
+	jump = App->audio->LoadFx("MUSIC/JumpSound.wav");
 	VehicleInfo car;
 	
 	// Car properties ----------------------------------------
@@ -224,11 +224,15 @@ bool ModulePlayer::CleanUp()
 		 int t;
 		 if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
 		 {
-			 App->audio->PlayFx(turbo);
+			 
+			 
 			 t = 2;
 		 }
 		 else t = 1;
-
+		 if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+		 {
+			 App->audio->PlayFx(turbo);
+		 }
 		 //brake and go forward
 		 if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && vehicle->GetKmh() < 0)
 		 {

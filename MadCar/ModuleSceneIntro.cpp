@@ -39,11 +39,25 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 	//start
+	CoinSound = App->audio->LoadFx("MUSIC/FlipSound.wav");
 	App->audio->PlayMusic("MUSIC/NotMarioKart.ogg");
+	//Hinge
+	base.size = vec3(1, 7, 1);
+	base.SetPos(0, 10, 20);
+	basebody = App->physics->AddBody(base, 12);
+	swing.size = vec3(1, 1, 1);
+	swing.SetPos(0, 10, 21);
+	swingbody = App->physics->AddBody(swing, 0); 
+	btVector3 vec(0, 0.5, 0);
+	//Hinge = new btHingeConstraint(*basebody->GetBody(), *swingbody->GetBody(), btVector3(0, 0.5, 0), btVector3(0, 0.5, 0), btVector3(0, 1, 0), btVector3(0, 1, 0));
+	Hinge = App->physics->Add_Constraint_Hinge(*basebody, *swingbody, vec3(0, 0, 0.5), vec3(0, 0, -0.5), vec3(0, 0, 1), vec3(0, 0, 1));
+	Hinge->enableAngularMotor(true, 4, 500);
+	
 	//COINS
 	Coin1.height = 1;
 	Coin1.radius = 2;
 	Coin1.SetPos(0, 10, 0);
+	Coin1.color = Gold;
 	Coin1Body = App->physics->AddBody(Coin1,0);
 	Coin1Body->SetAsSensor(true);
 	Coin1Body->collision_listeners.add(this);
@@ -331,24 +345,28 @@ update_status ModuleSceneIntro::Update(float dt)
 	w7D.Render();
 	w8D.Render();
 	FWall.Render();
-	Color temp1;
+	
 	
 	p2List_item<Cylinder>* temp2 = sensorsR.getFirst();
 	for (temp2; temp2 != nullptr; temp2 = temp2->next)
 	{
-		if (temp2->data.color.r < 1)
+		if (temp2->data.color.b <1|| temp2->data.color.r <1 || temp2->data.color.g <1)
 		{
-			temp1.Set(temp2->data.color.r + 0.01, temp2->data.color.g, temp2->data.color.b);
+			//App->audio->PlayFx(CoinSound);
+			temp1.Set(temp2->data.color.r + 0.01, temp2->data.color.g + 0.01, temp2->data.color.b +0.01);
+			temp2->data.color = temp1;
 		}
 		else
 		{
-			//temp1.Set(Coin1.color.r - 0.01, Coin1.color.g, Coin1.color.b);
+			//temp1.Set(0,1,0);
+			temp1.Set(temp2->data.color.r - 0.81, temp2->data.color.g -0.81, temp2->data.color.b - 0.81);
+			temp2->data.color = temp1;
 		}
-		temp2->data.color = temp1;
+		//temp2->data.color = temp1;
 		temp2->data.Render();
-		
 	}
 	
+
 	
 	//Coin1.Render();
 	//Render lights
@@ -372,6 +390,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	if (Coin1Body == body2 || Coin1Body == body1)
 	{
      		body1->Coin = true;
+			App->audio->PlayFx(CoinSound);
 	}
 	
 }

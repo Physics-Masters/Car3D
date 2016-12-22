@@ -4,11 +4,12 @@
 #include "Globals.h"
 #include "Primitive.h"
 #include "PhysVehicle3D.h"
+#include "PhysBody3D.h"
 #define MAX_SNAKE 2
 
 struct PhysBody3D;
 struct PhysMotor3D;
-
+struct btHingeConstraint;
 class ModuleSceneIntro : public Module
 {
 public:
@@ -123,6 +124,12 @@ public:
 	//BEd
 	Cube bed;
 	PhysBody3D* bedbody;
+	//hinge
+	Cube base;
+	PhysBody3D*basebody;
+	Cube swing;
+	PhysBody3D* swingbody;
+	btHingeConstraint *Hinge;
 	//vehicle
 //	Cube Vehicle;
 //	PhysBody3D* VehicleCollider;
@@ -131,4 +138,7 @@ public:
 	PhysBody3D* Coin1Body;
 	p2List<PhysBody3D*> sensors;
 	p2List<Cylinder> sensorsR;
+	Color temp1 = Gold;
+	//AUDIO
+	int CoinSound;
 };
