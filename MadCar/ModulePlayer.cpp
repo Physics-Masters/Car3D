@@ -13,6 +13,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 	gameplaytimer = PLAYING_TIME;
 	score = 0;
 	endflip = 0.0f;
+	coins = COINS;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -134,10 +135,8 @@ bool ModulePlayer::Start()
 	vehicle = App->physics->AddVehicle(car);
 
 	
-	vehicle->SetPos(0.0f, 12.0f, 10.0f);
+	vehicle->SetPos(0.0f, 5.0f, -20.0f);
 	
-	
-
 	originalpos = new float[16];
 	vehicle->GetTransform(originalpos);
 
@@ -184,8 +183,9 @@ bool ModulePlayer::CleanUp()
 	 {
 		if(vehicle->GetKmh() > 1 || vehicle->GetKmh() < -1)
 		vehicle->Brake(BRAKE_POWER);
-		if(App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)// && vehicle->GetKmh() < 2.0f && vehicle->GetKmh() > -2.0f)
+		if(App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 			Reset();
+		vehiclestate = GROUND;
 	 }
  }
 
@@ -200,6 +200,7 @@ bool ModulePlayer::CleanUp()
 	 vehicle->GetBody()->setLinearVelocity({ 0.0f, 0.0f, 0.0f });
 	 vehicle->GetBody()->setAngularVelocity({ 0.0f, 0.0f, 0.0f });
 	 App->scene_intro->SensorsReset();
+	 coins = COINS;
 	
  }
 
@@ -343,7 +344,7 @@ bool ModulePlayer::CleanUp()
 			 fliptimer.Start();
 		 }
 
-		 if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && vehiclestate != RIGHTFLIP)
+		 if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && vehiclestate != RIGHTFLIP)
 		 {
 			 if (vehiclestate == LEFTFLIP)
 				 vehiclestate = AIR;
@@ -351,7 +352,7 @@ bool ModulePlayer::CleanUp()
 			 vehicle->flip(Z.x / 3, Z.y / 3, Z.z / 3);
 			 fliptimer.Start();
 		 }
-		 if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && vehiclestate != LEFTFLIP)
+		 if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN && vehiclestate != LEFTFLIP)
 		 {
 			 if (vehiclestate == RIGHTFLIP)
 				 vehiclestate = AIR;
@@ -364,52 +365,55 @@ bool ModulePlayer::CleanUp()
 			 endflip = (float)fliptimer.Read() / 1000.0f;
 		 }
 	 }
+	 else fliptimer.Stop();
  }
 
  void ModulePlayer::Score()
  {
 	
-	
-	 if (vehiclestate == FRONTFLIP && endflip >= FRONTFLIP_TIME)
+	 if (play == PLAYING)
 	 {
-		 score += 200;
-		 fliptimer.Stop();
-		 vehiclestate = AIR;
-		 vehicle->flip(-1.5*X.x, -1.5*X.y, -1.5*X.z);
-		 App->audio->PlayFx(flip);
-	 }
-	 if (vehiclestate == BACKFLIP && endflip >= BACKFLIP_TIME)
-	 {
-		 score += 200;
-		 fliptimer.Stop();
-		 vehiclestate = AIR;
-		 vehicle->flip(X.x, X.y, X.z);
-		 App->audio->PlayFx(flip);
-	 }
-	 if (vehiclestate == LEFTFLIP || vehiclestate == RIGHTFLIP)
-	 {
-		 if (endflip >= SIDEFLIP_TIME)
+		 if (vehiclestate == FRONTFLIP && endflip >= FRONTFLIP_TIME)
 		 {
-			 score += 200;
+			 score += 500;
 			 fliptimer.Stop();
-			 if (vehiclestate == LEFTFLIP)
-				 vehicle->flip(Z.x / 3, Z.y / 3, Z.z / 3);
-			 else  vehicle->flip(-Z.x / 3, -Z.y / 3, -Z.z / 3);
 			 vehiclestate = AIR;
+			 vehicle->flip(-1.5*X.x, -1.5*X.y, -1.5*X.z);
 			 App->audio->PlayFx(flip);
 		 }
-	 }
-	 if (vehiclestate == TURNRIGHT || vehiclestate == TURNLEFT)
-	 {
-		 if (endflip >= TURNSIDE_TIME)
+		 if (vehiclestate == BACKFLIP && endflip >= BACKFLIP_TIME)
 		 {
-			 score += 200;
+			 score += 1000;
 			 fliptimer.Stop();
-			 if (vehiclestate == TURNRIGHT)
-				 vehicle->flip(-1.5*Y.x, -1.5*Y.y, -1.5*Y.z);
-			 else vehicle->flip(1.5*Y.x, 1.5*Y.y, 1.5*Y.z);
 			 vehiclestate = AIR;
+			 vehicle->flip(X.x, X.y, X.z);
 			 App->audio->PlayFx(flip);
+		 }
+		 if (vehiclestate == LEFTFLIP || vehiclestate == RIGHTFLIP)
+		 {
+			 if (endflip >= SIDEFLIP_TIME)
+			 {
+				 score += 250;
+				 fliptimer.Stop();
+				 if (vehiclestate == LEFTFLIP)
+					 vehicle->flip(Z.x / 3, Z.y / 3, Z.z / 3);
+				 else  vehicle->flip(-Z.x / 3, -Z.y / 3, -Z.z / 3);
+				 vehiclestate = AIR;
+				 App->audio->PlayFx(flip);
+			 }
+		 }
+		 if (vehiclestate == TURNRIGHT || vehiclestate == TURNLEFT)
+		 {
+			 if (endflip >= TURNSIDE_TIME)
+			 {
+				 score += 250;
+				 fliptimer.Stop();
+				 if (vehiclestate == TURNRIGHT)
+					 vehicle->flip(-1.5*Y.x, -1.5*Y.y, -1.5*Y.z);
+				 else vehicle->flip(1.5*Y.x, 1.5*Y.y, 1.5*Y.z);
+				 vehiclestate = AIR;
+				 App->audio->PlayFx(flip);
+			 }
 		 }
 	 }
  }
@@ -470,7 +474,7 @@ bool ModulePlayer::CleanUp()
 	 char title[80];
 	 int min = (int) gameplaytimer / 60;
 	 float sec = gameplaytimer - min * 60;
-	 sprintf_s(title, "%.1f Km/h Timer: %d:%.2f m:s Score %d", vehicle->GetKmh(), min, sec, score);
+	 sprintf_s(title, "%.1f Km/h Timer: %d:%.2f m:s Score %d Coins Left: %d", vehicle->GetKmh(), min, sec, score, coins);
 	 App->window->SetTitle(title);
 
 	 return UPDATE_CONTINUE;
